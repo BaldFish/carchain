@@ -6,13 +6,16 @@
         <h1>元链</h1>
       </div>
       <div class="search_box">
-        <select name="" class="search_select" v-model="searchType">
-          <option value="block_height">区块高度</option>
-          <option value="block_hash">区块哈希</option>
-          <option value="trade_hash">交易哈希</option>
-          <option value="save_hash">存证哈希</option>
-          <option value="account_balance">账户余额</option>
-        </select>
+        <div class="search_select_box">
+          <div class="search_select">{{val}}</div>
+          <ul class="search_type">
+            <li>区块高度</li>
+            <li>区块哈希</li>
+            <li>存证哈希</li>
+            <li>交易哈希</li>
+            <li>账户余额</li>
+          </ul>
+        </div>
         <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model="search_content" @keyup.enter.prevent="">
         <button class="btn" @click.prevent=""></button>
       </div>
@@ -22,23 +25,23 @@
           <ul class="count">
             <li>
               <span>当前区块高度：</span>
-              <span>{{}}</span>
+              <span>{{blockNumbers}}</span>
             </li>
             <li>
               <span>最新出块时间：</span>
-              <span>{{}}</span>
+              <span>{{difftime}}</span>
             </li>
             <li>
               <span>合作方数量：</span>
-              <span>{{}}</span>
+              <span>{{partners}}</span>
             </li>
             <li>
               <span>交易数量：</span>
-              <span>{{}}</span>
+              <span>{{transactionCounts}}</span>
             </li>
             <li>
               <span>存证数量：</span>
-              <span>{{}}</span>
+              <span>{{saveCounts}}</span>
             </li>
           </ul>
         </div>
@@ -54,34 +57,52 @@
               <li style="width:152px">交易笔数</li>
               <li style="width:168px">出块时间</li>
             </ul>
-            <ul class="info_tb">
-              <li style="width:164px">区块高度</li>
-              <li style="width:716px">区块ID</li>
-              <li style="width:152px">交易笔数</li>
-              <li style="width:168px">出块时间</li>
+            <ul class="info_tb" v-for="(item,index) in blocks" :class="index%2?'even':''" :key="item.number">
+              <li style="width:164px">{{item.number}}</li>
+              <li style="width:716px">{{item.hash}}</li>
+              <li style="width:152px">{{item.transactions.length}}</li>
+              <li style="width:168px">{{item.timestamp}}</li>
             </ul>
           </div>
-          <!-- <div class="info_tab">
-            <table class='tab'>
-              <thead>
-                <tr>
-                  <th style="width:164px">区块高度</th>
-                  <th style="width:716px">区块ID</th>
-                  <th style="width:152px">交易笔数</th>
-                  <th style="width:168px">出块时间</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>4</td>
-                </tr>
-              </tbody>
-            </table>
-          </div> -->
         </div>
+        <div class="info_box">
+          <div class="info_title">
+            <h2>最新存证</h2>
+          </div>
+          <div class="info">
+            <ul class="info_th">
+              <li style="width:164px">所属应用</li>
+              <li style="width:716px">存证哈希</li>
+              <li style="width:152px">存证类型</li>
+              <li style="width:168px">存证时间</li>
+            </ul>
+            <ul class="info_tb saves even" v-for="(item,index) in saves">
+              <li style="width:218px" class="apply">
+                <a href="javascript:void(0)">
+                  <img src="../common/images/logo_s.png" alt="">
+                </a>
+                <p>北京XXXXX科技有限公司</p>
+              </li>
+              <li style="width:662px">{{item[3]}}</li>
+              <li style="width:152px">{{item[1]}}</li>
+              <li style="width:168px">{{item[4]}}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="block_info">
+        <div class="block_info_th">
+
+        </div>
+        <div class="block_info_tb"></div>
+      </div>
+      <div class="save_info">
+
+      </div>
+      <div class="trade_info">
+
+      </div>
+      <div class="account_info">
 
       </div>
     </div>
@@ -89,7 +110,6 @@
 </template>
 
 <script>
-// import "@/common/stylus/index.styl";
 import formatDate from "@/common/js/formatDate.js";
 import axios from "axios";
 import _ from "lodash";
@@ -266,10 +286,185 @@ export default {
   name: "browser",
   data() {
     return {
+      val: "区块高度",
+      click_msg: "",
+      search_seen: true,
+      home_seen: true,
+      search_infoseen: false,
+      click_block: false,
+      click_save: false,
+      click_numberinfo: "",
+      click_numberinfojp: "",
+      click_saveinfo: "",
+      search_data: "",
+      time: "",
       searchType: "block_height",
-      search_content: ""
+      search_content: "",
+      getBlockHeight: {
+        transactions: []
+      },
+      getBlockHash: {
+        transactions: []
+      },
+      getTradeHash: {},
+      getSaveHash: {},
+      getAccountBalance: {
+        miner: "",
+        result: ""
+      },
+      blockNumbers: "",
+      partners: "",
+      difftime: "",
+      transactionCounts: "",
+      saveCounts: "",
+      blocks: [],
+      transactions: [],
+      saves: []
     };
-  }
+  },
+  mounted() {
+    var blocks = [];
+    var transactions = [];
+    var saves = [];
+    // 获取区块数量
+    this.blockNumbers = web3.eth.blockNumber;
+    //获取合作方数量
+    this.partners = myContractInstance.partnerNumber().c.toString();
+    //获取交易数量
+    axios
+      .get(tradeURL)
+      .then(res => {
+        this.transactionCounts = res.data.count;
+      })
+      .catch(error => {
+        this.transactionCounts = "";
+      });
+    //获取存证数量
+    this.saveCounts = myContractInstance.attestsNunber().c.toString();
+    //获取最新10个区块信息
+    var blockCounts = this.blockNumbers;
+    for (var i = blockCounts; i > blockCounts - 10; i--) {
+      var info = web3.eth.getBlock(i);
+      info.timestamp = formatDate(
+        new Date(info.timestamp * 1000),
+        "yyyy-MM-dd hh:mm:ss"
+      );
+      blocks.push(info);
+    }
+    this.blocks = blocks;
+    // .sort(function(a, b) {
+    //         return b.number - a.number;
+    //       });
+    //获取最新10个存证信息
+    var counts = this.saveCounts - 1;
+    for (var i = counts; i > counts - 10; i--) {
+      saves.push(myContractInstance.attestByIndex(i));
+      this.saves = saves.sort(function(a, b) {
+        return b[4] - a[4];
+      });
+    }
+    //每隔15秒重新获取数据
+    var that = this;
+    setInterval(function() {
+      //获取最新合作方数量
+      that.partners = myContractInstance.partnerNumber().c.toString();
+      //获取最新交易数量
+      axios
+        .get(tradeURL)
+        .then(res => {
+          that.transactionCounts = res.data.count;
+        })
+        .catch(error => {
+          that.transactionCounts = "";
+        });
+      //获取最新区块数和区块信息
+      var newBlockNumbers = web3.eth.blockNumber;
+      var newBlockCounts = newBlockNumbers - blockCounts;
+      that.blockNumbers = newBlockNumbers;
+      if (newBlockCounts === 0) {
+      } else if (10 > newBlockCounts > 0) {
+        for (var i = 1; i <= newBlockCounts; i++) {
+          var newInfo = web3.eth.getBlock(i + blockCounts);
+          newInfo.timestamp = formatDate(
+            new Date(newInfo.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          blocks.unshift(newInfo);
+          blocks.pop();
+        }
+        that.blocks = blocks;
+        // .sort(function(a, b) {
+        //   return b.number - a.number;
+        // });
+      } else {
+        var blockCounts = newBlockNumbers;
+        var blocks = [];
+        for (var i = blockCounts; i > blockCounts - 10; i--) {
+          var info = web3.eth.getBlock(i);
+          info.timestamp = formatDate(
+            new Date(info.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          blocks.push(info);
+        }
+        that.blocks = blocks;
+        // .sort(function(a, b) {
+        //   return b.number - a.number;
+        // });
+      }
+      //获取最新存证数量
+      that.saveCounts = myContractInstance.attestsNunber().c.toString();
+      //获取最新存证信息
+      var newSaveCounts = myContractInstance.attestsNunber().c.toString();
+      var newCounts = newSaveCounts - that.saveCounts;
+      if (newCounts === 0) {
+      } else if (newCounts > 0) {
+        if (newCounts < 10) {
+          for (var i = 0; i < newCounts; i++) {
+            saves.unshift(
+              myContractInstance.attestByIndex(parseInt(that.saveCounts) + i)
+            );
+            saves.pop();
+            that.saves = saves.sort(function(a, b) {
+              return b[4] - a[4];
+            });
+          }
+        } else {
+          for (var i = 0; i < 10; i++) {
+            saves.unshift(
+              myContractInstance.attestByIndex(parseInt(that.saveCounts) + i)
+            );
+            saves.pop();
+            that.saves = saves.sort(function(a, b) {
+              return b[4] - a[4];
+            });
+          }
+        }
+        that.saveCounts = newSaveCounts;
+      }
+    }, 15000);
+  },
+  watch: {
+    //获取最新出块时间
+    blocks: function() {
+      if (this.blocks.length > 1) {
+        //方法2，可以直接在watch下写监听到变量发生变化后要运行的代码
+        // var dateNew=new Date(this.blocks[0].timestamp)
+        // var dateOld=new Date(this.blocks[1].timestamp)
+        // this.difftime=(dateNew-dateOld)/1000+"s"
+        this.getdifftime();
+      }
+    }
+  },
+  methods: {
+    //获取最新出块时间
+    getdifftime: function() {
+      var dateNew = new Date(this.blocks[0].timestamp);
+      var dateOld = new Date(this.blocks[1].timestamp);
+      this.difftime = (dateNew - dateOld) / 1000 + "s";
+    }
+  },
+  components: {}
 };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -279,7 +474,7 @@ export default {
   background-image: url('../common/images/bg-top.png'), url('../common/images/bg-bottom.png');
   background-position: top center, top 1080px center;
   background-repeat: no-repeat, repeat-y;
-  padding-bottom: 80px;
+  padding-bottom: 55px;
 
   .browser {
     width: 1224px;
@@ -299,10 +494,12 @@ export default {
     .search_box {
       box-sizing: border-box;
       text-align: center;
-      margin-top: 38px;
+      padding-top: 38px;
+      padding-bottom: 80px;
       font-size: 0;
+      position: relative;
 
-      .search_select, .search_ipt, .btn {
+      .search_select_box, .search_ipt, .btn {
         outline: none;
         border: none;
         box-sizing: border-box;
@@ -316,23 +513,54 @@ export default {
         margin: 0 4px;
       }
 
-      .search_select {
-        // 清除默认样式
-        appearance: none;
-        -moz-appearance: none;
-        -webkit-appearance: none;
-        width: 176px;
-        font-size: 18px;
-        line-height: 50px;
-        padding-left: 50px;
-        border-radius: 25px 0px 0px 0px;
-        cursor: pointer;
-        background-image: url('../common/images/up.png');
-        background-position: top 17px right 15px;
-        background-repeat: no-repeat;
+      .search_select_box {
+        .search_select {
+          // select标签清除默认样式
+          // appearance: none;
+          // -moz-appearance: none;
+          // -webkit-appearance: none;
+          margin: 0;
+          width: 126px;
+          font-size: 18px;
+          line-height: 50px;
+          text-align: left;
+          padding-left: 50px;
+          box-shadow: 0px 3px 14px 1px rgba(255, 255, 255, 0.39);
+          border-radius: 25px 0px 0px 0px;
+          cursor: pointer;
+          background-image: url('../common/images/up.png');
+          background-position: top 17px right 15px;
+          background-repeat: no-repeat;
+        }
 
-        option {
+        .search_type {
+          position: absolute;
+          top: 88px;
+          left: 0;
+          box-sizing: border-box;
+          width: 176px;
+          height: 140px;
+          line-height: 24px;
+          background-color: #ffffff;
+          border-radius: 0px 0px 25px 0px;
           font-size: 14px;
+          text-align: left;
+          padding-left: 50px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          margin-top: 3px;
+          margin-left: 169px;
+          color: #222222;
+          // visibility:hidden
+          visibility: visible;
+
+          li {
+            cursor: pointer;
+          }
+
+          li:hover {
+            color: #008ffe;
+          }
         }
       }
 
@@ -355,9 +583,11 @@ export default {
     }
 
     .container_box {
+      padding-top: 126px;
+
       .count_box {
         width: 1200px;
-        margin-top: 242px;
+        // margin-top: 126px;
         margin-bottom: 36px;
         margin-left: auto;
         margin-right: auto;
@@ -410,6 +640,7 @@ export default {
             font-size: 0;
             margin: 0 auto;
             box-sizing: border-box;
+
             li {
               box-sizing: border-box;
               display: inline-block;
@@ -417,7 +648,7 @@ export default {
             }
           }
 
-          .info_th {            
+          .info_th {
             text-align: center;
             background-color: #a0a0a0;
             height: 30px;
@@ -427,28 +658,69 @@ export default {
           .info_tb {
             height: 36px;
             line-height: 36px;
-            color #222222;
-            cursor: pointer;  
+            color: #222222;
+            cursor: pointer;
+
             li {
-              border-right 1px solid #a0a0a0;
-              padding-left 12px
+              border-right: 1px solid #a0a0a0;
+              padding-left: 12px;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
-            li:last-child{
-              border-right none;
+
+            li:last-child {
+              border-right: none;
+            }
+
+            .apply {
+              padding-left: 0px;
+              text-align: center;
+              line-height: normal;
+
+              a {
+                display: inline-block;
+                padding-top: 8px;
+              }
             }
           }
+
+          .saves {
+            height: 82px;
+
+            li {
+              height: 82px;
+              line-height: 82px;
+              border-right: 1px solid #a0a0a0;
+              border-bottom: 1px solid #a0a0a0;
+            }
+          }
+
+          .even {
+            background-color: #ffffff;
+          }
+
+          .even:last-child {
+            border-radius: 0px 0px 25px 0px;
+          }
+
+          .info_tb:last-child {
+            li {
+              border-bottom: none;
+            }
+          }
+
           .info_tb:hover {
             background-color: #00e0dd;
-            color #ffffff;
+            color: #ffffff;
             box-shadow: 0px 3px 7px 0px rgba(0, 198, 255, 0.39);
-            li{
-              border none
-            }
-            li:last-child{
-              color red
+
+            li {
+              border: none;
             }
           }
-          .info_tb:last-child:hover{
+
+          .info_tb:last-child:hover {
             border-radius: 0px 0px 25px 0px;
           }
         }
