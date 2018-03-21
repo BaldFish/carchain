@@ -92,18 +92,70 @@
       </div>
       <div class="block_info">
         <div class="block_info_th">
-
+          <h3>区块信息</h3>
+          <p>查询时间：</p>
+          <div class="block_info_md">
+            <span class="left fl"></span>
+            <ul class="middle_left">
+              <li>时间戳：</li>
+              <li>区块高度：</li>
+              <li>区块哈希：</li>
+              <li>上一区块：</li>
+            </ul>
+            <ul class="middle_right">
+              <li>11111111111</li>
+              <li>111111111111</li>
+              <li>11111111111</li>
+              <li>111111111111111</li>
+            </ul>
+            <span class="right fr"></span>
+          </div>
+          
         </div>
-        <div class="block_info_tb"></div>
+        <div class="block_info_tb">
+        
+        </div>
       </div>
       <div class="save_info">
 
       </div>
-      <div class="trade_info">
-
+      <div class="trade_info block_info">
+        <div class="block_info_th">
+          <h3>交易信息</h3>
+          <p>查询时间：</p>
+          <div class="block_info_md">
+            <ul class="middle_left">
+              <li>交易哈希：</li>
+              <li>交易发起方：</li>
+              <li>交易接收方：</li>
+              <li>数值：</li>
+            </ul>
+            <ul class="middle_right">
+              <li>222222</li>
+              <li>2222222222222</li>
+              <li>22222222222222</li>
+              <li>222222222222222</li>
+            </ul>
+          </div>
+        </div>
+        <div class="block_info_tb">
+  
+        </div>
       </div>
-      <div class="account_info">
-
+      <div class="account_info block_info">
+        <div class="block_info_th">
+          <h3>账户余额</h3>
+          <div class="block_info_md">
+            <ul class="middle_left">
+              <li>用户ID：</li>
+              <li>余额：</li>
+            </ul>
+            <ul class="middle_right">
+              <li>3333333</li>
+              <li>333333333333</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -723,6 +775,92 @@ export default {
           .info_tb:last-child:hover {
             border-radius: 0px 0px 25px 0px;
           }
+        }
+      }
+    }
+    .block_info{
+      width 1200px
+      margin  0 auto
+      .block_info_th{
+        margin-bottom 20px
+        box-sizing border-box
+        width 1200px
+        height 184px
+        background-color: #ffffff;
+        border-radius: 10px;
+        border: solid 1px #eeeeee;
+        h3{
+          font-size: 16px;
+          height: 36px;
+          line-height: 36px;
+          color: #ffffff;
+          background-color: rgba(0, 143, 254, 0.77);
+          border-radius: 10px 10px 0px 0px;
+          background-image: url("../common/images/xinxi.png");
+          background-position:left 10px center;
+          background-repeat: no-repeat;
+          padding-left 36px
+        }
+        p{
+          color: #999999;
+          padding-left 10px
+          padding-top 8px
+        }
+        .block_info_md{
+          font-size 0px
+          color #666666
+          padding 15px 10px
+          
+          .left,.middle_left,.middle_right,.right{
+            display inline-block
+            font-size 14px
+          }
+          .middle_left,.middle_right{
+            line-height 24px
+          }
+          .middle_right{
+            color #222222
+          }
+          .left,.right{
+            margin 0 10px
+            width 17px
+            height 23px
+            background-position:top center;
+            background-repeat: no-repeat;
+            position relative
+            top 30px
+            cursor pointer
+          }
+          .left{
+            margin-right 20px
+            background-image: url("../common/images/left.png");
+          }
+          .right{
+            background-image: url("../common/images/right.png");
+          }
+        }
+      }
+      .block_info_tb{
+        width: 1200px;
+        min-height 184px
+        box-sizing border-box
+        border: solid 1px #eeeeee;
+        border-radius: 10px;
+        background-color: #ffffff;
+        padding 20px 10px;
+      }
+    }
+    .trade_info{
+      .block_info_th{
+        h3{
+          background-image: url("../common/images/$.png");
+        }
+      }
+    }
+    .account_info{
+      .block_info_th{
+        h3{
+          background-image: url("../common/images/¥.png");
         }
       }
     }
