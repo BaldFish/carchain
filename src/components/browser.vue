@@ -1,13 +1,13 @@
 <template>
   <div class="browser_wrap">
     <div class="browser">
-      <div class="browser_log">
+      <div class="browser_log" v-if="home_seen">
         <img src="../common/images/logo_b.png" alt="元链">
         <h1>元链</h1>
       </div>
-      <div class="search_box" v-if="search_seen">
+      <div class="search_box">
         <div class="search_select_box" @mouseleave="leaveHid">
-          <div class="" @click="showType($event)" :class="{ search_select:!togglebg,showdown:togglebg,}">{{val}}</div>
+          <div class="" @click="showType($event)" :class="{ search_select:!togglebg,showdown:togglebg,}">{{searchType}}</div>
           <div style="height: 3px;width: 176px"></div>
           <ul class="" ref="select" :class="{search_type:!togglebg,showv:togglebg,}" @mouseleave="leaveHid">
             <li @click="changType($event)">区块高度</li>
@@ -17,8 +17,8 @@
             <li @click="changType($event)">账户余额</li>
           </ul>
         </div>
-        <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model="search_content" @keyup.enter.prevent="">
-        <button class="btn" @click.prevent=""></button>
+        <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model="search_content" @keyup.enter.prevent="search">
+        <button class="btn" @click.prevent="search"></button>
       </div>
       <div class="container_box" v-if="home_seen">
         
@@ -60,7 +60,7 @@
             </ul>
             <ul class="info_tb" v-for="(item,index) in blocks" :class="index%2?'even':''" :key="item.number">
               <li style="width:164px">{{item.number}}</li>
-              <li style="width:716px" @click="clickBlock($event)">{{item.hash}}</li>
+              <li style="width:716px;cursor:pointer" @click="clickBlock($event)">{{item.hash}}</li>
               <li style="width:152px">{{item.transactions.length}}</li>
               <li style="width:168px">{{item.timestamp}}</li>
             </ul>
@@ -73,7 +73,7 @@
           <div class="info">
             <ul class="info_th">
               <li style="width:164px">所属应用</li>
-              <li style="width:716px" @click="clickSave($event)">存证哈希</li>
+              <li style="width:716px">存证哈希</li>
               <li style="width:152px">存证类型</li>
               <li style="width:168px">存证时间</li>
             </ul>
@@ -84,19 +84,19 @@
                 </a>
                 <p>北京XXXXX科技有限公司</p>
               </li>
-              <li style="width:662px">{{item[3]}}</li>
+              <li style="width:662px;cursor:pointer" @click="clickSave($event)">{{item[3]}}</li>
               <li style="width:152px">{{item[1]}}</li>
               <li style="width:168px">{{item[4]}}</li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="block_info">
+      <div class="block_info" v-if="block_seen">
         <div class="block_info_th">
           <h3>区块信息</h3>
-          <p>查询时间：</p>
+          <p>查询时间：{{searchTime}}</p>
           <div class="block_info_md">
-            <span class="left fl"></span>
+            <span class="left fl" @click="clickPrevious($event)"></span>
             <ul class="middle_left">
               <li>时间戳：</li>
               <li>区块高度：</li>
@@ -104,20 +104,20 @@
               <li>上一区块：</li>
             </ul>
             <ul class="middle_right">
-              <li>11111111111</li>
-              <li>111111111111</li>
-              <li>11111111111</li>
-              <li>111111111111111</li>
+              <li>{{click_blockinfo.timestamp}}</li>
+              <li>{{click_blockinfo.number}}</li>
+              <li>{{click_blockinfo.hash}}</li>
+              <li>{{click_blockinfo.parentHash}}</li>
             </ul>
-            <span class="right fr"></span>
+            <span class="right fr" @click="clickNext($event)"></span>
           </div>
         
         </div>
         <div class="block_info_tb">
-        
+          <p class="pre" v-html="click_blockinfojp"></p>
         </div>
       </div>
-      <div class="save_info block_info">
+      <div class="save_info block_info" v-if="save_seen">
         <div class="block_info_th">
           <h3>存证信息</h3>
           <div class="block_info_md">
@@ -129,11 +129,11 @@
               <li>存证时间：</li>
             </ul>
             <ul class="middle_right">
-              <li>222222</li>
-              <li>222222</li>
-              <li>2222222222222</li>
-              <li>22222222222222</li>
-              <li>222222222222222</li>
+              <li>{{click_saveinfo[0]}}</li>
+              <li>{{click_saveinfo[1]}}</li>
+              <li>{{click_saveinfo[2]}}</li>
+              <li>{{click_saveinfo[3]}}</li>
+              <li>{{click_saveinfo[4]}}</li>
             </ul>
           </div>
         </div>
@@ -145,9 +145,10 @@
           </div>
         </div>
         <div class="block_info_tb">
+          <p class="pre" v-html="click_saveinfojp"></p>
         </div>
       </div>
-      <div class="trade_info block_info">
+      <div class="trade_info block_info" v-if="trade_seen">
         <div class="block_info_th">
           <h3>交易信息</h3>
           <p>查询时间：</p>
@@ -170,7 +171,7 @@
         
         </div>
       </div>
-      <div class="account_info block_info">
+      <div class="account_info block_info" v-if="account_seen">
         <div class="block_info_th">
           <h3>账户余额</h3>
           <div class="block_info_md">
@@ -368,20 +369,23 @@
     data() {
       return {
         togglebg: false,
-        val: "区块高度",
-        click_msg: "",
-        search_seen: true,
-        home_seen: true,
-        search_infoseen: false,
-        click_block: false,
-        click_save: false,
-        click_numberinfo: "",
-        click_numberinfojp: "",
-        click_saveinfo: "",
-        search_data: "",
-        time: "",
-        searchType: "block_height",
+        searchType: "区块高度",
         search_content: "",
+        search_data: "",
+        search_datajp:"",
+        searchTime: "",
+        click_msg: "",
+        click_blockinfo: "",
+        click_blockinfojp: "",
+        click_saveinfo: "",
+        click_saveinfojp: "",
+        // search_seen: true,
+        home_seen: true,
+        // search_infoseen: false,
+        block_seen: false,
+        save_seen: false,
+        trade_seen: false,
+        account_seen: false,
         getBlockHeight: {
           transactions: []
         },
@@ -534,13 +538,13 @@
           // var dateNew=new Date(this.blocks[0].timestamp)
           // var dateOld=new Date(this.blocks[1].timestamp)
           // this.difftime=(dateNew-dateOld)/1000+"s"
-          this.getdifftime();
+          this.getDiffTime();
         }
       }
     },
     methods: {
       //获取最新出块时间
-      getdifftime: function () {
+      getDiffTime: function () {
         var dateNew = new Date(this.blocks[0].timestamp);
         var dateOld = new Date(this.blocks[1].timestamp);
         this.difftime = (dateNew - dateOld) / 1000 + "s";
@@ -556,24 +560,156 @@
         }
       },
       //更改搜索类型，并隐藏下拉列表
-      changType:function (event) {
-        this.val= event.target.innerText
+      changType: function (event) {
+        this.val = event.target.innerText
         this.togglebg = false;
       },
+      //获取查询时间
+      getSearchTime() {
+        var searchTime = new Date();
+        searchTime = formatDate(searchTime, "yyyy-MM-dd hh:mm:ss");
+        return searchTime;
+      },
+      //json数据格式化
+      syntaxHighlight: function (json) {
+        if (typeof json != "string") {
+          json = JSON.stringify(json, undefined, 2);
+        }
+        json = json
+          .replace(/&/g, "&")
+          .replace(/</g, "<")
+          .replace(/>/g, ">");
+        return json.replace(
+          /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g,
+          function (match) {
+            var cls = "number";
+            if (/^"/.test(match)) {
+              if (/:$/.test(match)) {
+                cls = "key";
+              } else {
+                cls = "string";
+              }
+            } else if (/true|false/.test(match)) {
+              cls = "boolean";
+            } else if (/null/.test(match)) {
+              cls = "null";
+            }
+            return (
+              '<span style="word-wrap:break-word;overflow:hidden;" class="' +
+              cls +
+              '">' +
+              match +
+              "</span>"
+            );
+          }
+        );
+      },
       //点击区块ID显示对应的区块信息页
-      clickBlock:function () {
-      
+      clickBlock: function () {
+        this.click_msg = event.target.innerText;
+        this.home_seen = false;
+        this.save_seen = false;
+        this.block_seen = true;
+        this.searchTime = this.$options.methods.getSearchTime();
+        var that = this;
+        this.click_blockinfo = _.find(that.blocks, function (o) {
+          return o.hash === that.click_msg;
+        });
+        this.click_blockinfojp = this.$options.methods.syntaxHighlight(this.click_blockinfo);
+      },
+      //查看上一个区块信息
+      clickPrevious: function () {
+        var nowNumber = this.click_blockinfo.number
+        this.searchTime = this.$options.methods.getSearchTime();
+        var previousInfo = web3.eth.getBlock(nowNumber - 1)
+        previousInfo.timestamp = formatDate(
+          new Date(previousInfo.timestamp * 1000),
+          "yyyy-MM-dd hh:mm:ss"
+        );
+        this.click_blockinfo = previousInfo
+        this.click_blockinfojp = this.$options.methods.syntaxHighlight(this.click_blockinfo);
+      },
+      //查看下一个区块信息
+      clickNext: function () {
+        var nowNumber = this.click_blockinfo.number;
+        this.searchTime = this.$options.methods.getSearchTime();
+        var nextInfo = web3.eth.getBlock(nowNumber + 1);
+        nextInfo.timestamp = formatDate(
+          new Date(nextInfo.timestamp * 1000),
+          "yyyy-MM-dd hh:mm:ss"
+        );
+        this.click_blockinfo = nextInfo;
+        this.click_blockinfojp = this.$options.methods.syntaxHighlight(this.click_blockinfo);
       },
       //点击存证哈希显示对应的存证信息页
-      clickSave:function () {
-      
+      clickSave: function () {
+        this.click_msg = event.target.innerText;
+        var that = this;
+        this.home_seen = false;
+        this.block_seen = false;
+        this.save_seen = true;
+        this.click_saveinfo = _.find(that.saves, function (o) {
+          return o[3] === that.click_msg;
+        });
+        this.click_saveinfojp = this.$options.methods.syntaxHighlight(this.click_saveinfo);
+        console.log(this.click_saveinfo)
+      },
+      clearSearch() {
+        this.home_seen=false;
+        this.block_seen=false;
+        this.save_seen=false;
+        this.trade_seen=false;
+        this.account_seen=false;
+      },
+      search:function () {
+        // this.$options.methods.clearSearch();
+        if (this.searchType === "区块高度"||"区块哈希") {
+          //按区块高度或者区块哈希查询区块信息
+          this.home_seen=false;
+          this.block_seen=true;
+          this.save_seen=false;
+          this.trade_seen=false;
+          this.account_seen=false;
+          var searchInfo=web3.eth.getBlock(this.search_content);
+          searchInfo.timestamp = formatDate(
+            new Date(searchInfo.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          this.search_data =searchInfo;
+          this.click_blockinfo=this.search_data;
+          this.search_datajp = this.$options.methods.syntaxHighlight(this.search_data);
+          this.click_blockinfojp=this.search_datajp;
+        } else if (this.searchType === "存证哈希") {
+          //按交易哈希查询交易信息
+          
+          this.getTradeHash = web3.eth.getTransaction(this.search_content);
+          this.search_data = this.$options.methods.syntaxHighlight(
+            this.getTradeHash
+          );
+          // this.search_data=this.$compile(this.search_data)
+        } else if (this.searchType === "交易哈希") {
+          //按存证哈希查询存证信息
+          this.getSaveHash = myContractInstance.acquireVerify(
+            this.search_content
+          );
+          this.search_data = this.$options.methods.syntaxHighlight(
+            this.getSaveHash
+          );
+        } else if (this.searchType === "账户余额") {
+          //按账户地址查询余额
+          this.getAccountBalance = web3.eth.getBalance(this.search_content);
+          this.getAccountBalance = String(this.getAccountBalance);
+          this.search_data = this.$options.methods.syntaxHighlight(
+            this.getAccountBalance
+          );
+        }
       },
     },
     components: {}
   };
 </script>
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="stylus" rel="stylesheet/stylus">
+<style scoped lang="stylus">
   .browser_wrap {
     background-color: #040b1c;
     background-image: url('../common/images/bg-top.png'), url('../common/images/bg-bottom.png');
@@ -802,7 +938,6 @@
               height: 36px;
               line-height: 36px;
               color: #222222;
-              cursor: pointer;
               
               li {
                 border-right: 1px solid #a0a0a0;
@@ -836,6 +971,11 @@
                 line-height: 82px;
                 border-right: 1px solid #a0a0a0;
                 border-bottom: 1px solid #a0a0a0;
+                p {
+                  overflow: hidden;
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                }
               }
             }
             
@@ -913,6 +1053,13 @@
             }
             .middle_right {
               color #222222
+              vertical-align top
+              li {
+                width 850px
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+              }
             }
             .left, .right {
               margin 0 10px
@@ -934,7 +1081,8 @@
           }
         }
         .block_info_tb {
-          font-size 14px
+          font-size 14px;
+          color: #666666;
           width: 1200px;
           min-height 184px
           box-sizing border-box
@@ -942,6 +1090,35 @@
           border-radius: 10px;
           background-color: #ffffff;
           padding 20px 10px;
+          .pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            overflow: hidden;
+            line-height: 1.5;
+            span {
+              color aqua
+            }
+            
+            .string {
+              color: green;
+            }
+            
+            .number {
+              color: darkorange;
+            }
+            
+            .boolean {
+              color: blue;
+            }
+            
+            .null {
+              color: magenta;
+            }
+            
+            .key {
+              color: red;
+            }
+          }
         }
       }
       .trade_info {
@@ -997,6 +1174,9 @@
             }
             p {
               line-height 34px
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
             }
           }
         }
