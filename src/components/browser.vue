@@ -104,17 +104,17 @@
               <li>上一区块：</li>
             </ul>
             <ul class="middle_right">
-              <li>{{click_blockinfo.timestamp}}</li>
-              <li>{{click_blockinfo.number}}</li>
-              <li>{{click_blockinfo.hash}}</li>
-              <li>{{click_blockinfo.parentHash}}</li>
+              <li>{{searchBlock.timestamp}}</li>
+              <li>{{searchBlock.number}}</li>
+              <li>{{searchBlock.hash}}</li>
+              <li>{{searchBlock.parentHash}}</li>
             </ul>
             <span class="right fr" @click="clickNext($event)"></span>
           </div>
         
         </div>
         <div class="block_info_tb">
-          <p class="pre" v-html="click_blockinfojp"></p>
+          <p class="pre" v-html="searchBlockjp"></p>
         </div>
       </div>
       <div class="save_info block_info" v-if="save_seen">
@@ -122,18 +122,18 @@
           <h3>存证信息</h3>
           <div class="block_info_md">
             <ul class="middle_left">
-              <li>存证发起方：</li>
-              <li>存证类型：</li>
-              <li>存证内容：</li>
-              <li>存证哈希：</li>
-              <li>存证时间：</li>
-            </ul>
+            <li>存证发起方：</li>
+            <li>存证类型：</li>
+            <li>存证内容：</li>
+            <li>存证哈希：</li>
+            <li>存证时间：</li>
+          </ul>
             <ul class="middle_right">
-              <li>{{click_saveinfo[0]}}</li>
-              <li>{{click_saveinfo[1]}}</li>
-              <li>{{click_saveinfo[2]}}</li>
-              <li>{{click_saveinfo[3]}}</li>
-              <li>{{click_saveinfo[4]}}</li>
+              <li>{{searchSaveHash[0]}}</li>
+              <li>{{searchSaveHash[1]}}</li>
+              <li>{{searchSaveHash[2]}}</li>
+              <li>{{searchSaveHash[3]}}</li>
+              <li>{{searchSaveHash[4]}}</li>
             </ul>
           </div>
         </div>
@@ -145,13 +145,13 @@
           </div>
         </div>
         <div class="block_info_tb">
-          <p class="pre" v-html="click_saveinfojp"></p>
+          <p class="pre" v-html="searchSaveHashjp"></p>
         </div>
       </div>
       <div class="trade_info block_info" v-if="trade_seen">
         <div class="block_info_th">
           <h3>交易信息</h3>
-          <p>查询时间：</p>
+          <p>查询时间：{{searchTime}}</p>
           <div class="block_info_md">
             <ul class="middle_left">
               <li>交易哈希：</li>
@@ -160,15 +160,15 @@
               <li>数值：</li>
             </ul>
             <ul class="middle_right">
-              <li>222222</li>
-              <li>2222222222222</li>
-              <li>22222222222222</li>
-              <li>222222222222222</li>
+              <li>{{searchTradeHash.hash}}</li>
+              <li>{{searchTradeHash.from}}</li>
+              <li>{{searchTradeHash.to}}</li>
+              <li>{{searchTradeHash.value}}</li>
             </ul>
           </div>
         </div>
         <div class="block_info_tb">
-        
+          <p class="pre" v-html="searchTradeHashjp"></p>
         </div>
       </div>
       <div class="account_info block_info" v-if="account_seen">
@@ -180,8 +180,8 @@
               <li>余额：</li>
             </ul>
             <ul class="middle_right">
-              <li>3333333</li>
-              <li>333333333333</li>
+              <li></li>
+              <li></li>
             </ul>
           </div>
         </div>
@@ -368,44 +368,35 @@
     name: "browser",
     data() {
       return {
-        togglebg: false,
-        searchType: "区块高度",
-        search_content: "",
-        search_data: "",
-        search_datajp:"",
-        searchTime: "",
-        click_msg: "",
-        click_blockinfo: "",
-        click_blockinfojp: "",
-        click_saveinfo: "",
-        click_saveinfojp: "",
-        // search_seen: true,
-        home_seen: true,
-        // search_infoseen: false,
-        block_seen: false,
-        save_seen: false,
-        trade_seen: false,
-        account_seen: false,
-        getBlockHeight: {
-          transactions: []
-        },
-        getBlockHash: {
-          transactions: []
-        },
-        getTradeHash: {},
-        getSaveHash: {},
-        getAccountBalance: {
-          miner: "",
-          result: ""
-        },
         blockNumbers: "",
         partners: "",
         difftime: "",
         transactionCounts: "",
         saveCounts: "",
         blocks: [],
+        saves: [],
         transactions: [],
-        saves: []
+        togglebg: false,
+        searchType: "区块高度",
+        search_content: "",
+        searchTime: "",
+        click_msg: "",
+        searchBlock:{},
+        searchBlockjp:{},
+        searchSaveHash: {},
+        searchSaveHashjp:{},
+        searchTradeHash: {},
+        searchTradeHashjp:{},
+        searchAccountBalance: {
+          miner: "",
+          result: ""
+        },
+        searchAccountBalancejp:{},
+        home_seen: true,
+        block_seen: false,
+        save_seen: false,
+        trade_seen: false,
+        account_seen: false,
       };
     },
     mounted() {
@@ -561,11 +552,12 @@
       },
       //更改搜索类型，并隐藏下拉列表
       changType: function (event) {
-        this.val = event.target.innerText
+        this.searchType = event.target.innerText;
+        console.log(this.searchType)
         this.togglebg = false;
       },
       //获取查询时间
-      getSearchTime() {
+      getSearchTime:function () {
         var searchTime = new Date();
         searchTime = formatDate(searchTime, "yyyy-MM-dd hh:mm:ss");
         return searchTime;
@@ -612,34 +604,35 @@
         this.block_seen = true;
         this.searchTime = this.$options.methods.getSearchTime();
         var that = this;
-        this.click_blockinfo = _.find(that.blocks, function (o) {
+        this.searchBlock = _.find(that.blocks, function (o) {
           return o.hash === that.click_msg;
         });
-        this.click_blockinfojp = this.$options.methods.syntaxHighlight(this.click_blockinfo);
+        this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+        console.log(this.search_content)
       },
       //查看上一个区块信息
       clickPrevious: function () {
-        var nowNumber = this.click_blockinfo.number
+        var nowNumber = this.searchBlock.number;
         this.searchTime = this.$options.methods.getSearchTime();
-        var previousInfo = web3.eth.getBlock(nowNumber - 1)
+        var previousInfo = web3.eth.getBlock(nowNumber - 1);
         previousInfo.timestamp = formatDate(
           new Date(previousInfo.timestamp * 1000),
           "yyyy-MM-dd hh:mm:ss"
         );
-        this.click_blockinfo = previousInfo
-        this.click_blockinfojp = this.$options.methods.syntaxHighlight(this.click_blockinfo);
+        this.searchBlock = previousInfo;
+        this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
       },
       //查看下一个区块信息
       clickNext: function () {
-        var nowNumber = this.click_blockinfo.number;
+        var nowNumber = this.searchBlock.number;
         this.searchTime = this.$options.methods.getSearchTime();
         var nextInfo = web3.eth.getBlock(nowNumber + 1);
         nextInfo.timestamp = formatDate(
           new Date(nextInfo.timestamp * 1000),
           "yyyy-MM-dd hh:mm:ss"
         );
-        this.click_blockinfo = nextInfo;
-        this.click_blockinfojp = this.$options.methods.syntaxHighlight(this.click_blockinfo);
+        this.searchBlock = nextInfo;
+        this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
       },
       //点击存证哈希显示对应的存证信息页
       clickSave: function () {
@@ -648,13 +641,12 @@
         this.home_seen = false;
         this.block_seen = false;
         this.save_seen = true;
-        this.click_saveinfo = _.find(that.saves, function (o) {
+        this.searchSaveHash = _.find(that.saves, function (o) {
           return o[3] === that.click_msg;
         });
-        this.click_saveinfojp = this.$options.methods.syntaxHighlight(this.click_saveinfo);
-        console.log(this.click_saveinfo)
+        this.searchSaveHashjp = this.$options.methods.syntaxHighlight(this.searchSaveHash);
       },
-      clearSearch() {
+      clearSearch:function() {
         this.home_seen=false;
         this.block_seen=false;
         this.save_seen=false;
@@ -662,46 +654,75 @@
         this.account_seen=false;
       },
       search:function () {
-        // this.$options.methods.clearSearch();
-        if (this.searchType === "区块高度"||"区块哈希") {
+        /*this.$options.methods.clearSearch();*/
+        if (this.searchType === "区块高度") {
           //按区块高度或者区块哈希查询区块信息
           this.home_seen=false;
           this.block_seen=true;
           this.save_seen=false;
           this.trade_seen=false;
           this.account_seen=false;
-          var searchInfo=web3.eth.getBlock(this.search_content);
-          searchInfo.timestamp = formatDate(
-            new Date(searchInfo.timestamp * 1000),
+          this.searchTime = this.$options.methods.getSearchTime();
+          this.searchBlock=web3.eth.getBlock(this.search_content);
+          this.searchBlock.timestamp = formatDate(
+            new Date(this.searchBlock.timestamp * 1000),
             "yyyy-MM-dd hh:mm:ss"
           );
-          this.search_data =searchInfo;
-          this.click_blockinfo=this.search_data;
-          this.search_datajp = this.$options.methods.syntaxHighlight(this.search_data);
-          this.click_blockinfojp=this.search_datajp;
-        } else if (this.searchType === "存证哈希") {
-          //按交易哈希查询交易信息
-          
-          this.getTradeHash = web3.eth.getTransaction(this.search_content);
-          this.search_data = this.$options.methods.syntaxHighlight(
-            this.getTradeHash
+          this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+        }else if (this.searchType === "区块哈希") {
+          this.home_seen=false;
+          this.block_seen=true;
+          this.save_seen=false;
+          this.trade_seen=false;
+          this.account_seen=false;
+          this.searchTime = this.$options.methods.getSearchTime();
+          this.searchBlock=web3.eth.getBlock(this.search_content);
+          this.searchBlock.timestamp = formatDate(
+            new Date(this.searchBlock.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
           );
-          // this.search_data=this.$compile(this.search_data)
-        } else if (this.searchType === "交易哈希") {
+          this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+        } else if (this.searchType === "存证哈希") {
           //按存证哈希查询存证信息
-          this.getSaveHash = myContractInstance.acquireVerify(
+          this.home_seen=false;
+          this.block_seen=false;
+          this.save_seen=true;
+          this.trade_seen=false;
+          this.account_seen=false;
+          this.searchTime = this.$options.methods.getSearchTime();
+          this.searchSaveHash = myContractInstance.acquireVerify(
             this.search_content
           );
-          this.search_data = this.$options.methods.syntaxHighlight(
-            this.getSaveHash
+          this.searchSaveHashjp = this.$options.methods.syntaxHighlight(
+            this.searchSaveHash
+          );
+        } else if (this.searchType === "交易哈希") {
+          //按交易哈希查询交易信息
+          this.home_seen=false;
+          this.block_seen=false;
+          this.save_seen=false;
+          this.trade_seen=true;
+          this.account_seen=false;
+          this.searchTime = this.$options.methods.getSearchTime();
+          this.searchTradeHash = web3.eth.getTransaction(this.search_content);
+          this.searchTradeHashjp = this.$options.methods.syntaxHighlight(
+            this.searchTradeHash
           );
         } else if (this.searchType === "账户余额") {
           //按账户地址查询余额
-          this.getAccountBalance = web3.eth.getBalance(this.search_content);
-          this.getAccountBalance = String(this.getAccountBalance);
-          this.search_data = this.$options.methods.syntaxHighlight(
-            this.getAccountBalance
+          this.home_seen=false;
+          this.block_seen=false;
+          this.save_seen=false;
+          this.trade_seen=false;
+          this.account_seen=true;
+          this.searchTime = this.$options.methods.getSearchTime();
+          this.searchAccountBalance = web3.eth.getBalance(this.search_content);
+          console.log(this.searchAccountBalance)
+          // this.searchAccountBalance = String(this.searchAccountBalance);
+          this.searchAccountBalancejp = this.$options.methods.syntaxHighlight(
+            this.searchAccountBalance
           );
+          console.log(this.searchAccountBalancejp)
         }
       },
     },
@@ -1050,6 +1071,7 @@
             }
             .middle_left, .middle_right {
               line-height 24px
+              height 24px
             }
             .middle_right {
               color #222222
@@ -1059,6 +1081,7 @@
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                height 24px
               }
             }
             .left, .right {
