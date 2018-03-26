@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="head-wrap">
+    <div class="head-wrap" ref="head">
       <div class="head">
         <a href="/">
           <img src="./common/images/logo_m.png"/>
@@ -73,7 +73,15 @@
   import "./common/stylus/index.styl";
   
   export default {
-    name: "App"
+    name: "App",
+    mounted() {
+      window.addEventListener('scroll', this.headScroll)
+    },
+    methods: {
+      headScroll: function () {
+        window.scrollY > 30 ? (this.$refs.head.style.backgroundColor = "rgba(0,0,0,1)") : (this.$refs.head.style.backgroundColor = "rgba(0,0,0,0.5)")
+      },
+    },
   };
 </script>
 
@@ -126,6 +134,35 @@
     margin: 0 auto;
     padding-top 70px
     width 100%
+    .pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow: hidden;
+      line-height: 1.5;
+      span {
+        color #666666;
+      }
+    
+      .string {
+        color: #666666;
+      }
+    
+      .number {
+        color: #666666;
+      }
+    
+      .boolean {
+        color: #666666;
+      }
+    
+      .null {
+        color: #666666;
+      }
+    
+      .key {
+        color: #666666;
+      }
+    }
   }
   
   .footer-wrap {

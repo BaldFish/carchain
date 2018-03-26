@@ -17,7 +17,7 @@
             <li @click="changType($event)">账户余额</li>
           </ul>
         </div>
-        <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model="search_content" @keyup.enter.prevent="search">
+        <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model.trim="search_content" @keyup.enter.prevent="search">
         <button class="btn" @click.prevent="search"></button>
       </div>
       <div class="container_box" v-if="home_seen">
@@ -180,8 +180,8 @@
               <li>余额：</li>
             </ul>
             <ul class="middle_right">
-              <li></li>
-              <li></li>
+              <li>{{searchAccountBalance.id}}</li>
+              <li>{{searchAccountBalance.result}}</li>
             </ul>
           </div>
         </div>
@@ -388,7 +388,7 @@
         searchTradeHash: {},
         searchTradeHashjp:{},
         searchAccountBalance: {
-          miner: "",
+          id: "",
           result: ""
         },
         searchAccountBalancejp:{},
@@ -553,7 +553,6 @@
       //更改搜索类型，并隐藏下拉列表
       changType: function (event) {
         this.searchType = event.target.innerText;
-        console.log(this.searchType)
         this.togglebg = false;
       },
       //获取查询时间
@@ -612,8 +611,11 @@
       },
       //查看上一个区块信息
       clickPrevious: function () {
+        console.log(1)
         var nowNumber = this.searchBlock.number;
+        console.log(2)
         this.searchTime = this.$options.methods.getSearchTime();
+        console.log(3)
         var previousInfo = web3.eth.getBlock(nowNumber - 1);
         previousInfo.timestamp = formatDate(
           new Date(previousInfo.timestamp * 1000),
@@ -652,6 +654,9 @@
         this.save_seen=false;
         this.trade_seen=false;
         this.account_seen=false;
+      },
+      clearSearch:function () {
+      
       },
       search:function () {
         /*this.$options.methods.clearSearch();*/
@@ -716,13 +721,10 @@
           this.trade_seen=false;
           this.account_seen=true;
           this.searchTime = this.$options.methods.getSearchTime();
-          this.searchAccountBalance = web3.eth.getBalance(this.search_content);
-          console.log(this.searchAccountBalance)
-          // this.searchAccountBalance = String(this.searchAccountBalance);
-          this.searchAccountBalancejp = this.$options.methods.syntaxHighlight(
-            this.searchAccountBalance
-          );
-          console.log(this.searchAccountBalancejp)
+          this.searchAccountBalance.id=this.search_content;
+          this.searchAccountBalance.result = web3.eth.getBalance(this.search_content);
+          this.searchAccountBalance.result = this.searchAccountBalance.result.dividedBy(1e+18).toString();
+          
         }
       },
     },
@@ -1105,15 +1107,16 @@
         }
         .block_info_tb {
           font-size 14px;
-          color: #666666;
+          color: #999999;
           width: 1200px;
           min-height 184px
           box-sizing border-box
           border: solid 1px #eeeeee;
           border-radius: 10px;
           background-color: #ffffff;
-          padding 20px 10px;
-          .pre {
+          padding 20px 25px;
+          /*.pre {
+            //stylus作用域问题导致不起作用，在主页定义不加scoped可已解决此问题
             white-space: pre-wrap;
             word-wrap: break-word;
             overflow: hidden;
@@ -1141,7 +1144,7 @@
             .key {
               color: red;
             }
-          }
+          }*/
         }
       }
       .trade_info {
