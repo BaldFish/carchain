@@ -611,30 +611,39 @@
       },
       //查看上一个区块信息
       clickPrevious: function () {
-        console.log(1)
         var nowNumber = this.searchBlock.number;
-        console.log(2)
         this.searchTime = this.$options.methods.getSearchTime();
-        console.log(3)
-        var previousInfo = web3.eth.getBlock(nowNumber - 1);
-        previousInfo.timestamp = formatDate(
-          new Date(previousInfo.timestamp * 1000),
-          "yyyy-MM-dd hh:mm:ss"
-        );
-        this.searchBlock = previousInfo;
-        this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+        if(nowNumber - 1>=0){
+          var previousInfo = web3.eth.getBlock(nowNumber - 1);
+          previousInfo.timestamp = formatDate(
+            new Date(previousInfo.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          this.searchBlock = previousInfo;
+          this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+        }else{
+          this.searchBlock ={"number":- 1};
+          this.searchBlockjp="区块不存在!!!"
+        }
       },
       //查看下一个区块信息
       clickNext: function () {
         var nowNumber = this.searchBlock.number;
+        var lastNumber=web3.eth.blockNumber;
         this.searchTime = this.$options.methods.getSearchTime();
-        var nextInfo = web3.eth.getBlock(nowNumber + 1);
-        nextInfo.timestamp = formatDate(
-          new Date(nextInfo.timestamp * 1000),
-          "yyyy-MM-dd hh:mm:ss"
-        );
-        this.searchBlock = nextInfo;
-        this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+        if(nowNumber + 1<=lastNumber){
+          var nextInfo = web3.eth.getBlock(nowNumber + 1);
+          nextInfo.timestamp = formatDate(
+            new Date(nextInfo.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          this.searchBlock = nextInfo;
+          this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+        }else{
+          this.searchBlock ={"number":lastNumber+1};
+          this.searchBlockjp="区块不存在!!!"
+        }
+        
       },
       //点击存证哈希显示对应的存证信息页
       clickSave: function () {
