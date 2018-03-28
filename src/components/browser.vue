@@ -17,7 +17,7 @@
             <li @click="changType($event)">账户余额</li>
           </ul>
         </div>
-        <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model.trim="search_content" @keyup.enter.prevent="search">
+        <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model.trim="search_content">
         <button class="btn" @click.prevent="search"></button>
       </div>
       <div class="container_box" v-if="home_seen">
@@ -122,12 +122,12 @@
           <h3>存证信息</h3>
           <div class="block_info_md">
             <ul class="middle_left">
-            <li>存证发起方：</li>
-            <li>存证类型：</li>
-            <li>存证内容：</li>
-            <li>存证哈希：</li>
-            <li>存证时间：</li>
-          </ul>
+              <li>存证发起方：</li>
+              <li>存证类型：</li>
+              <li>存证内容：</li>
+              <li>存证哈希：</li>
+              <li>存证时间：</li>
+            </ul>
             <ul class="middle_right">
               <li>{{searchSaveHash[0]}}</li>
               <li>{{searchSaveHash[1]}}</li>
@@ -381,17 +381,17 @@
         search_content: "",
         searchTime: "",
         click_msg: "",
-        searchBlock:{},
-        searchBlockjp:{},
+        searchBlock: {},
+        searchBlockjp: {},
         searchSaveHash: {},
-        searchSaveHashjp:{},
+        searchSaveHashjp: {},
         searchTradeHash: {},
-        searchTradeHashjp:{},
+        searchTradeHashjp: {},
         searchAccountBalance: {
           id: "",
           result: ""
         },
-        searchAccountBalancejp:{},
+        searchAccountBalancejp: {},
         home_seen: true,
         block_seen: false,
         save_seen: false,
@@ -556,7 +556,7 @@
         this.togglebg = false;
       },
       //获取查询时间
-      getSearchTime:function () {
+      getSearchTime: function () {
         var searchTime = new Date();
         searchTime = formatDate(searchTime, "yyyy-MM-dd hh:mm:ss");
         return searchTime;
@@ -613,7 +613,7 @@
       clickPrevious: function () {
         var nowNumber = this.searchBlock.number;
         this.searchTime = this.$options.methods.getSearchTime();
-        if(nowNumber - 1>=0){
+        if (nowNumber - 1 >= 0) {
           var previousInfo = web3.eth.getBlock(nowNumber - 1);
           previousInfo.timestamp = formatDate(
             new Date(previousInfo.timestamp * 1000),
@@ -621,17 +621,17 @@
           );
           this.searchBlock = previousInfo;
           this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
-        }else{
-          this.searchBlock ={"number":- 1};
-          this.searchBlockjp="区块不存在!!!"
+        } else {
+          this.searchBlock = {"number": -1};
+          this.searchBlockjp = "区块不存在!!!"
         }
       },
       //查看下一个区块信息
       clickNext: function () {
         var nowNumber = this.searchBlock.number;
-        var lastNumber=web3.eth.blockNumber;
+        var lastNumber = web3.eth.blockNumber;
         this.searchTime = this.$options.methods.getSearchTime();
-        if(nowNumber + 1<=lastNumber){
+        if (nowNumber + 1 <= lastNumber) {
           var nextInfo = web3.eth.getBlock(nowNumber + 1);
           nextInfo.timestamp = formatDate(
             new Date(nextInfo.timestamp * 1000),
@@ -639,9 +639,9 @@
           );
           this.searchBlock = nextInfo;
           this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
-        }else{
-          this.searchBlock ={"number":lastNumber+1};
-          this.searchBlockjp="区块不存在!!!"
+        } else {
+          this.searchBlock = {"number": lastNumber + 1};
+          this.searchBlockjp = "区块不存在!!!"
         }
         
       },
@@ -657,85 +657,109 @@
         });
         this.searchSaveHashjp = this.$options.methods.syntaxHighlight(this.searchSaveHash);
       },
-      clearSearch:function() {
-        this.home_seen=false;
-        this.block_seen=false;
-        this.save_seen=false;
-        this.trade_seen=false;
-        this.account_seen=false;
+      clearSearch: function () {
+        this.home_seen = false;
+        this.block_seen = false;
+        this.save_seen = false;
+        this.trade_seen = false;
+        this.account_seen = false;
       },
-      clearSearch:function () {
-      
-      },
-      search:function () {
+      search: function () {
         /*this.$options.methods.clearSearch();*/
-        if (this.searchType === "区块高度") {
+        if (this.search_content === "") {
+          return
+        } else if (this.searchType === "区块高度") {
           //按区块高度或者区块哈希查询区块信息
-          this.home_seen=false;
-          this.block_seen=true;
-          this.save_seen=false;
-          this.trade_seen=false;
-          this.account_seen=false;
+          this.home_seen = false;
+          this.block_seen = true;
+          this.save_seen = false;
+          this.trade_seen = false;
+          this.account_seen = false;
           this.searchTime = this.$options.methods.getSearchTime();
-          this.searchBlock=web3.eth.getBlock(this.search_content);
-          this.searchBlock.timestamp = formatDate(
-            new Date(this.searchBlock.timestamp * 1000),
-            "yyyy-MM-dd hh:mm:ss"
-          );
-          this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
-        }else if (this.searchType === "区块哈希") {
-          this.home_seen=false;
-          this.block_seen=true;
-          this.save_seen=false;
-          this.trade_seen=false;
-          this.account_seen=false;
+          this.searchBlock = web3.eth.getBlock(this.search_content);
+          if (this.searchBlock === null) {
+            this.searchBlock = ""
+            this.searchBlockjp = "您输入的区块高度有误!!!"
+          } else {
+            this.searchBlock.timestamp = formatDate(
+              new Date(this.searchBlock.timestamp * 1000),
+              "yyyy-MM-dd hh:mm:ss"
+            );
+            this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+          }
+        } else if (this.searchType === "区块哈希") {
+          this.home_seen = false;
+          this.block_seen = true;
+          this.save_seen = false;
+          this.trade_seen = false;
+          this.account_seen = false;
           this.searchTime = this.$options.methods.getSearchTime();
-          this.searchBlock=web3.eth.getBlock(this.search_content);
-          this.searchBlock.timestamp = formatDate(
-            new Date(this.searchBlock.timestamp * 1000),
-            "yyyy-MM-dd hh:mm:ss"
-          );
-          this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+          this.searchBlock = web3.eth.getBlock(this.search_content);
+          if (this.searchBlock === null) {
+            this.searchBlock = "";
+            this.searchBlockjp = "您输入的区块哈希有误!!!";
+          } else {
+            this.searchBlock.timestamp = formatDate(
+              new Date(this.searchBlock.timestamp * 1000),
+              "yyyy-MM-dd hh:mm:ss"
+            );
+            this.searchBlockjp = this.$options.methods.syntaxHighlight(this.searchBlock);
+          }
         } else if (this.searchType === "存证哈希") {
           //按存证哈希查询存证信息
-          this.home_seen=false;
-          this.block_seen=false;
-          this.save_seen=true;
-          this.trade_seen=false;
-          this.account_seen=false;
+          this.home_seen = false;
+          this.block_seen = false;
+          this.save_seen = true;
+          this.trade_seen = false;
+          this.account_seen = false;
           this.searchTime = this.$options.methods.getSearchTime();
           this.searchSaveHash = myContractInstance.acquireVerify(
             this.search_content
           );
-          this.searchSaveHashjp = this.$options.methods.syntaxHighlight(
-            this.searchSaveHash
-          );
+          if (this.searchSaveHash[0] === "0x0000000000000000000000000000000000000000") {
+            this.searchSaveHash[0] = "";
+            this.searchSaveHashjp = "您输入的存证信息有误!!!";
+          } else {
+            this.searchSaveHashjp = this.$options.methods.syntaxHighlight(
+              this.searchSaveHash
+            );
+          }
         } else if (this.searchType === "交易哈希") {
           //按交易哈希查询交易信息
-          this.home_seen=false;
-          this.block_seen=false;
-          this.save_seen=false;
-          this.trade_seen=true;
-          this.account_seen=false;
+          this.home_seen = false;
+          this.block_seen = false;
+          this.save_seen = false;
+          this.trade_seen = true;
+          this.account_seen = false;
           this.searchTime = this.$options.methods.getSearchTime();
-          this.searchTradeHash = web3.eth.getTransaction(this.search_content);
-          this.searchTradeHashjp = this.$options.methods.syntaxHighlight(
-            this.searchTradeHash
-          );
+          try {
+            this.searchTradeHash = web3.eth.getTransaction(this.search_content);
+            this.searchTradeHashjp = this.$options.methods.syntaxHighlight(
+              this.searchTradeHash
+            );
+          } catch (e) {
+            this.searchTradeHash = "";
+            this.searchTradeHashjp = "您输入的交易哈希有误!!!";
+          }
         } else if (this.searchType === "账户余额") {
           //按账户地址查询余额
-          this.home_seen=false;
-          this.block_seen=false;
-          this.save_seen=false;
-          this.trade_seen=false;
-          this.account_seen=true;
+          this.home_seen = false;
+          this.block_seen = false;
+          this.save_seen = false;
+          this.trade_seen = false;
+          this.account_seen = true;
           this.searchTime = this.$options.methods.getSearchTime();
-          this.searchAccountBalance.id=this.search_content;
-          this.searchAccountBalance.result = web3.eth.getBalance(this.search_content);
-          this.searchAccountBalance.result = this.searchAccountBalance.result.dividedBy(1e+18).toString();
-          
+          try {
+            this.searchAccountBalance.result = web3.eth.getBalance(this.search_content);
+            this.searchAccountBalance.id = this.search_content;
+            this.searchAccountBalance.result = this.searchAccountBalance.result.dividedBy(1e+18).toString();
+          } catch (e) {
+            this.searchAccountBalance.id = "您输入的账户地址有误!!!";
+            this.searchAccountBalance.result = "";
+          }
         }
-      },
+      }
+      
     },
     components: {}
   };
