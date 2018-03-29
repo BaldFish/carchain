@@ -2,23 +2,29 @@
   <div id="app">
     <div class="head-wrap" ref="head">
       <div class="head">
-        <a href="/">
-          <img src="./common/images/logo_m.png"/>
+        <a class="logo" href="/">
+          <img src="./common/images/logo_top.png"/>
         </a>
-        <ul class="fr">
+        <ul class="">
           <li class="nav">
             <router-link to="/home">首页</router-link>
           </li>
           <li class="nav">
-            <router-link to="/recommend">产品介绍</router-link>
+            <router-link to="/project">项目介绍</router-link>
           <li class="nav">
-            <router-link to="/consult">咨询</router-link>
+            <router-link to="/information">资讯</router-link>
           </li>
           <li class="nav">
-            <router-link to="/download">钱包下载</router-link>
+            <router-link to="/scene">应用场景</router-link>
           </li>
           <li class="nav">
-            <router-link to="/we">关于我们</router-link>
+            <router-link to="/product">产品介绍</router-link>
+          </li>
+          <li class="nav">
+            <router-link to="/developer">开发者计划</router-link>
+          </li>
+          <li class="nav">
+            <router-link to="/book">白皮书</router-link>
           </li>
           <li class="nav">
             <router-link to="/browser">区块链浏览器</router-link>
@@ -29,41 +35,42 @@
     <router-view class="main"></router-view>
     <div class="footer-wrap">
       <div class="footer">
-        <div class="fl">
-          <div class="fl fl-box">
-            <img src="./common/images/service.png" alt="产品服务">
-            <p>产品服务</p>
-            <ul>
-              <li><a href="javascript:void(0)">下载钱包</a></li>
-              <li><a href="javascript:void(0)">区块链浏览器</a></li>
-            </ul>
-          </div>
-          <div class="fl fl-box">
-            <img src="./common/images/scene.png" alt="应用场景">
-            <p>应用场景</p>
-            <ul>
-              <li><a href="javascript:void(0)">区块链共享汽车</a></li>
-              <li><a href="javascript:void(0)">汽车金融应用</a></li>
-              <li><a href="javascript:void(0)">汽车大数据</a></li>
-            </ul>
-          </div>
-          <div class="fl fl-box">
-            <img src="./common/images/we.png" alt="关于我们">
-            <p>关于我们</p>
-            <ul>
-              <li><a href="javascript:void(0)">公司简介</a></li>
-              <li><a href="javascript:void(0)">联系我们</a></li>
-              <li><a href="javascript:void(0)">加入我们</a></li>
-            </ul>
-          </div>
+        <div class="fl-box">
+          <img src="./common/images/service.png" alt="产品服务">
+          <p>产品服务</p>
+          <ul>
+            <li><a href="javascript:void(0)">项目介绍</a></li>
+            <li><a href="javascript:void(0)">技术优势</a></li>
+            <li><a href="javascript:void(0)">开发者计划</a></li>
+            <li><a href="javascript:void(0)">区块链浏览器</a></li>
+          </ul>
         </div>
-        <div class="fr fr-box">
-          <p>深圳市元征科技股份有限公司北京研发中心</p>
-          <p>工作时间：08：30-18:30</p>
-          <p>服务电话：010 - 58205388</p>
-          <p>联系地址：北京市朝阳区建国路93号万达广场8号楼808</p>
+        <div class="fl-box">
+          <img src="./common/images/scene.png" alt="应用场景">
+          <p>应用场景</p>
+          <ul>
+            <li><a href="javascript:void(0)">汽车八大应用</a></li>
+            <li><a href="javascript:void(0)">汽车大数据</a></li>
+          </ul>
         </div>
-        <p class="clearfix ff">Copyright © 2018 深圳市元征科技股份有限公司北京研发中心 京ICP备************</p>
+        <div class="fl-box">
+          <img src="./common/images/download.png" alt="app下载">
+          <p>app下载</p>
+          <ul>
+            <li>
+              <a href="javascript:void(0)">
+                <img src="./common/images/Android.png" alt="">
+                <p>Android版</p>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">
+                <img src="./common/images/IOS.png" alt="">
+                <p>IOS版</p>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -79,7 +86,7 @@
     },
     methods: {
       headScroll: function () {
-        window.scrollY > 30 ? (this.$refs.head.style.backgroundColor = "rgba(0,0,0,1)") : (this.$refs.head.style.backgroundColor = "rgba(0,0,0,0.5)")
+        window.scrollY > 10 ? (this.$refs.head.style.backgroundColor = "rgba(0,0,0,1)") : (this.$refs.head.style.backgroundColor = "rgba(0,0,0,0.5)")
       },
     },
   };
@@ -96,32 +103,31 @@
     position: fixed;
     z-index: 1000;
     width: 100%;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding-top: 10px
-    padding-bottom: 10px
+    height: 90px;
+    background-color: rgba(0, 0, 0, 0.47);
     .head {
       box-sizing: border-box
-      width: 1224px;
+      width: 1200px;
       margin: 0 auto;
-      padding-left 12px
-      height: 50px;
-      line-height: 50px;
-      img {
-        vertical-align: middle
+      text-align center
+      .logo {
+        img {
+          vertical-align: middle
+        }
       }
-      ul, .nav {
-        display: inline-block;
-      }
-      
       .nav {
-        margin-left 22px
+        display: inline-block;
+        margin-left 20px
+        margin-right 20px
+        
         & > a {
-          padding 0 12px
           display: inline-block;
           color #bdbdbd
+          box-sizing border-box
+          padding 11px 0 10px
           &.router-link-active, &:hover {
             color: #ffffff;
+            border-bottom 1px solid #ffffff
           }
         }
       }
@@ -142,23 +148,23 @@
       span {
         color #666666;
       }
-    
+      
       .string {
         color: #666666;
       }
-    
+      
       .number {
         color: #666666;
       }
-    
+      
       .boolean {
         color: #666666;
       }
-    
+      
       .null {
         color: #666666;
       }
-    
+      
       .key {
         color: #666666;
       }
@@ -167,47 +173,42 @@
   
   .footer-wrap {
     width 100%
-    height 210px
-    background-color: rgba(0, 143, 254, 1);
-    text-align: center;
+    background-color: #313131;
     .footer {
+      display: flex;
       box-sizing: border-box
-      width 1224px
-      height 210px
-      padding-left 40px
-      padding-right 12px
+      width 1200px
+      height 200px
       margin 0 auto
       .fl-box {
-        text-align left
-        padding-top 16px
-        width 168px
-        img {
-          margin-left 19px
-        }
+        flex: 1;
+        text-align center
+        padding-top 20px
         p {
-          padding 10px 0
-          font-size 16px
+          padding 7px 0 14px
+          font-size 14px
         }
         li {
           padding 5px 0
           a {
             color #ffffff
+            cursor pointer
           }
         }
       }
-      .fr-box {
-        text-align right
-        padding-top 32px
-        p {
-          padding 5px 0
+      .fl-box:last-child {
+        font-size 0
+        li {
+          padding 5px 10px
+          display inline-block
+          img {
+            vertical-align top
+          }
+          p {
+            padding 5px 0
+            font-size 14px
+          }
         }
-        p:first-child {
-          padding 0 0 35px
-        }
-        
-      }
-      .ff {
-        padding-top 25px
       }
     }
   }

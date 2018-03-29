@@ -2,7 +2,7 @@
   <div class="browser_wrap">
     <div class="browser">
       <div class="browser_log" v-if="home_seen">
-        <img src="../common/images/logo_b.png" alt="元链">
+        <img src="./images/logo_b.png" alt="元链">
         <h1>元链</h1>
       </div>
       <div class="search_box">
@@ -80,7 +80,7 @@
             <ul class="info_tb saves even" v-for="(item,index) in saves">
               <li style="width:218px" class="apply">
                 <a href="javascript:void(0)">
-                  <img src="../common/images/logo_s.png" alt="">
+                  <img src="./images/logo_s.png" alt="">
                 </a>
                 <p>北京XXXXX科技有限公司</p>
               </li>
@@ -140,7 +140,7 @@
         <div class="block_info_th_right">
           <h3>所属应用信息</h3>
           <div class="th_right_md">
-            <img src="../common/images/logo_save.png" alt="">
+            <img src="./images/logo_save.png" alt="">
             <p>北京XXXXXXXX责任有限公司</p>
           </div>
         </div>
@@ -362,7 +362,7 @@
   ];
   var MyContract = web3.eth.contract(abi);
   var myContractInstance = MyContract.at(
-    "0x5a8AB986b3F1A834063Fa278EcBeEa098FAd03Cb"
+    "0x3f01a034865808e902Cf0DB1ADe4D850C523B234"
   );
   export default {
     name: "browser",
@@ -768,7 +768,7 @@
 <style scoped lang="stylus">
   .browser_wrap {
     background-color: #040b1c;
-    background-image: url('../common/images/bg-top.png'), url('../common/images/bg-bottom.png');
+    background-image: url('./images/bg-top.png'), url('./images/bg-bottom.png');
     background-position: top center, top 1080px center;
     background-repeat: no-repeat, repeat-y;
     padding-bottom: 55px;
@@ -826,7 +826,7 @@
             box-shadow: 0px 3px 14px 1px rgba(255, 255, 255, 0.39);
             border-radius: 25px 0px 0px 0px;
             cursor: pointer;
-            background-image: url('../common/images/up.png');
+            background-image: url('./images/up.png');
             background-position: top 17px right 15px;
             background-repeat: no-repeat;
           }
@@ -840,7 +840,7 @@
             box-shadow: 0px 3px 14px 1px rgba(255, 255, 255, 0.39);
             border-radius: 25px 0px 0px 0px;
             cursor: pointer;
-            background-image: url('../common/images/down.png');
+            background-image: url('./images/down.png');
             background-position: top 17px right 15px;
             background-repeat: no-repeat;
           }
@@ -911,7 +911,7 @@
           width: 90px;
           border-radius: 0px 0px 25px 0px;
           cursor: pointer;
-          background-image: url('../common/images/search.png');
+          background-image: url('./images/search.png');
           background-position: top 12px left 26px;
           background-repeat: no-repeat;
         }
@@ -1084,7 +1084,7 @@
             color: #ffffff;
             background-color: rgba(0, 143, 254, 0.77);
             border-radius: 10px 10px 0px 0px;
-            background-image: url("../common/images/xinxi.png");
+            background-image: url("./images/xinxi.png");
             background-position: left 10px center;
             background-repeat: no-repeat;
             padding-left 36px
@@ -1131,10 +1131,10 @@
             }
             .left {
               margin-right 20px
-              background-image: url("../common/images/left.png");
+              background-image: url("./images/left.png");
             }
             .right {
-              background-image: url("../common/images/right.png");
+              background-image: url("./images/right.png");
             }
           }
         }
@@ -1183,14 +1183,14 @@
       .trade_info {
         .block_info_th {
           h3 {
-            background-image: url("../common/images/$.png");
+            background-image: url("./images/$.png");
           }
         }
       }
       .account_info {
         .block_info_th {
           h3 {
-            background-image: url("../common/images/¥.png");
+            background-image: url("./images/¥.png");
           }
         }
       }
@@ -1202,7 +1202,7 @@
             padding 14px 10px 13px
           }
           h3 {
-            background-image: url("../common/images/cun.png");
+            background-image: url("./images/cun.png");
           }
         }
         .block_info_th_right {
