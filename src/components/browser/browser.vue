@@ -767,6 +767,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
   .browser_wrap {
+    padding-top 90px
     background-color: #040b1c;
     background-image: url('./images/bg-top.png'), url('./images/bg-bottom.png');
     background-position: top center, top 1080px center;

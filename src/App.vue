@@ -39,17 +39,17 @@
           <img src="./common/images/service.png" alt="产品服务">
           <p>产品服务</p>
           <ul>
-            <li><a href="javascript:void(0)">项目介绍</a></li>
+            <li><a href="#/project">项目介绍</a></li>
             <li><a href="javascript:void(0)">技术优势</a></li>
-            <li><a href="javascript:void(0)">开发者计划</a></li>
-            <li><a href="javascript:void(0)">区块链浏览器</a></li>
+            <li><a href="#/developer">开发者计划</a></li>
+            <li><a href="#/browser">区块链浏览器</a></li>
           </ul>
         </div>
         <div class="fl-box">
           <img src="./common/images/scene.png" alt="应用场景">
           <p>应用场景</p>
           <ul>
-            <li><a href="javascript:void(0)">汽车八大应用</a></li>
+            <li><a href="#/scene">汽车八大应用</a></li>
             <li><a href="javascript:void(0)">汽车大数据</a></li>
           </ul>
         </div>
@@ -86,7 +86,7 @@
     },
     methods: {
       headScroll: function () {
-        window.scrollY > 10 ? (this.$refs.head.style.backgroundColor = "rgba(0,0,0,1)") : (this.$refs.head.style.backgroundColor = "rgba(0,0,0,0.5)")
+        window.scrollY > 30 ? (this.$refs.head.style.backgroundColor = "rgba(0,0,0,1)") : (this.$refs.head.style.backgroundColor = "rgba(0,0,0,0.5)")
       },
     },
   };
@@ -138,7 +138,6 @@
     flex: 1;
     box-sizing: border-box;
     margin: 0 auto;
-    padding-top 70px
     width 100%
     .pre {
       white-space: pre-wrap;
