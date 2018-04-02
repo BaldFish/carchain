@@ -139,6 +139,7 @@
     box-sizing: border-box;
     margin: 0 auto;
     width 100%
+    min-width 1224px
     .pre {
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -172,8 +173,10 @@
   
   .footer-wrap {
     width 100%
+    min-width 1224px
     background-color: #313131;
     .footer {
+      background-color: #313131;
       display: flex;
       box-sizing: border-box
       width 1200px

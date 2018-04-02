@@ -63,12 +63,77 @@
         <span>资讯</span>
         <p></p>
       </div>
+      <div class="info_data">
+        <div class="info_left">
+          <img src="./images/9.png" alt="">
+        </div>
+        <div class="info_right">
+          <h2>汾阳市长一行到访瑞卓喜投 深度探讨区块链+汾酒溯源</h2>
+          <span>2018/05/05</span>
+          <p>
+            3月7日上午，山西汾阳市市长吴晓东一行来到北京瑞卓喜投考察访问，与鑫苑科技集团执行总裁、瑞卓喜投CEO庞引明等领导共同讨论了区块链在政府建设内容，包括精准扶贫、食品溯源尤其是汾酒溯源等领域的应用前景，并深度讨论了在汾阳创建区块链产业园庞引明等领导共同讨论了区块链在政府建设内容，包括精准扶贫、食品溯源尤其是汾酒溯源等领域的应用前景，并深度讨论了在汾阳创建区块链产业园区的构想及落地实施方案区的构想及落地实施方案。与吴晓东市长同行的有：汾阳市副市长王琳、杏花村经济开发区常务副主任郝耀光、汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山西金海帆置业有限公司董事长马莉山西金海帆置业有限公司行政总监生广杰等。龙、、山汾阳市、山汾阳市国土局局局...任郝耀光、汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山西金海帆置业有限公司董事长马莉山西金海帆置业有限公司行政总监生广杰等。龙、、山汾阳市、山汾阳市国土局局局...</p>
+        </div>
+      </div>
+      <div class="info_data_more"><a href="#/information">查看更多</a></div>
     </div>
     <div class="box6">
       <div class="headline">
         <p></p>
         <span>合作伙伴</span>
         <p></p>
+        <span class="refresh"><img src="./images/refresh.png" alt="换一批"></span>
+      </div>
+      <div class="partner_data">
+        <ul>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li class="lm_none">
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li>
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+          <li class="lm_none">
+            <div><img src="./images/logo_rw.png" alt=""></div>
+            <p>元征集团</p>
+          </li>
+        </ul>
       </div>
     </div>
   
@@ -86,6 +151,7 @@
 
 <style scoped lang="stylus">
   .home {
+    min-width 1200px
     .headline {
       font-size 0;
       color: #008ffe;
@@ -225,10 +291,128 @@
     }
     .box5 {
       box-sizing border-box
+      .info_data {
+        width 1200px
+        margin 0 auto
+        margin-top 50px
+        position relative
+        .info_left {
+          width 424px
+          height 424px
+          text-align center
+          img {
+            width 100%
+            height 100%
+          }
+        }
+        .info_right {
+          box-shadow: 0px 0px 34px 5px rgba(0, 204, 255, 0.15);
+          position absolute
+          top 50%
+          transform: translateY(-50%);
+          right 0px
+          width 940px
+          background-color #ffffff
+          h2 {
+            color #000000;
+            font-size 22px
+            display inline-block
+            line-height 56px
+            margin-left 30px
+          }
+          span {
+            color: #999999;
+            font-size 14px
+            float right
+            display inline-block
+            line-height 56px
+            margin-right 30px
+          }
+          p {
+            font-size 16px
+            line-height 18px
+            color: #666666;
+            margin-left 30px
+            margin-right 36px
+            margin-bottom 38px
+          }
+        }
+      }
+      .info_data_more {
+        text-align center
+        padding-top 34px
+        padding-bottom 64px
+        a {
+          background-color #008ffe;
+          border-radius: 4px;
+          display inline-block
+          color #ffffff
+          font-size 18px
+          padding 8px 10px
+        }
+      }
     }
     .box6 {
       box-sizing border-box
       background-color: rgba(0, 143, 254, 0.1);
+      padding-bottom 58px
+      .headline {
+        width 1200px
+        margin 0 auto
+        position relative
+        .refresh {
+          position absolute
+          right 0px
+          padding 0px
+          cursor pointer
+        }
+      }
+      .partner_data {
+        padding-top 40px
+        width 1200px
+        margin 0 auto
+        font-size 0
+        text-align center
+        li {
+          width 190px
+          height 90px
+          display inline-block
+          text-align center
+          background-color #ffffff
+          margin-right 12px
+          margin-bottom 15px
+          line-height 90px
+          font-size 18px
+          vertical-align top
+          div {
+            display: table-cell;
+            width 190px
+            height 90px
+            vertical-align: middle;
+            text-align: center;
+            img {
+              vertical-align: middle;
+            }
+          }
+          p {
+            display none
+          }
+        }
+        li:hover {
+          cursor pointer
+          background-color: #008ffe;
+          box-shadow: 0px 3px 9px 0px rgba(0, 143, 254, 0.33);
+          div {
+            display none
+          }
+          p {
+            display block
+          }
+        }
+        .lm_none {
+          margin-right 0
+        }
+      }
     }
   }
 </style>
