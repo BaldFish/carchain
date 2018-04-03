@@ -136,7 +136,6 @@
         </ul>
       </div>
     </div>
-  
   </div>
 </template>
 
@@ -335,6 +334,13 @@
             margin-left 30px
             margin-right 36px
             margin-bottom 38px
+            //显示9行文字后用...代替兼容性不好，适用于WebKit浏览器及移动端
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 9;
+            -webkit-box-orient: vertical;
           }
         }
       }

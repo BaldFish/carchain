@@ -40,7 +40,7 @@
           <p>产品服务</p>
           <ul>
             <li><a href="#/project">项目介绍</a></li>
-            <li><a href="javascript:void(0)">技术优势</a></li>
+            <li><a href="#/technological">技术优势</a></li>
             <li><a href="#/developer">开发者计划</a></li>
             <li><a href="#/browser">区块链浏览器</a></li>
           </ul>
@@ -50,7 +50,7 @@
           <p>应用场景</p>
           <ul>
             <li><a href="#/scene">汽车八大应用</a></li>
-            <li><a href="javascript:void(0)">汽车大数据</a></li>
+            <li><a href="#/bigdata">汽车大数据</a></li>
           </ul>
         </div>
         <div class="fl-box">
@@ -58,14 +58,14 @@
           <p>app下载</p>
           <ul>
             <li>
-              <a href="javascript:void(0)">
-                <img src="./common/images/Android.png" alt="">
+              <a href="#/download">
+                <img src="./common/images/Android.png" alt="Android">
                 <p>Android版</p>
               </a>
             </li>
             <li>
-              <a href="javascript:void(0)">
-                <img src="./common/images/IOS.png" alt="">
+              <a href="#/download">
+                <img src="./common/images/IOS.png" alt="IOS">
                 <p>IOS版</p>
               </a>
             </li>
