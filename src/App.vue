@@ -40,7 +40,7 @@
           <p>产品服务</p>
           <ul>
             <li><a href="#/project">项目介绍</a></li>
-            <li><a href="#/technological">技术优势</a></li>
+            <li><a href="#/technology">技术优势</a></li>
             <li><a href="#/developer">开发者计划</a></li>
             <li><a href="#/browser">区块链浏览器</a></li>
           </ul>
@@ -58,13 +58,13 @@
           <p>app下载</p>
           <ul>
             <li>
-              <a href="#/download">
+              <a href="#/product">
                 <img src="./common/images/Android.png" alt="Android">
                 <p>Android版</p>
               </a>
             </li>
             <li>
-              <a href="#/download">
+              <a href="#/product">
                 <img src="./common/images/IOS.png" alt="IOS">
                 <p>IOS版</p>
               </a>

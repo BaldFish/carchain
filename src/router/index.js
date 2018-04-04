@@ -8,7 +8,7 @@ import myProduct from '@/components/product/product'
 import myDeveloper from '@/components/developer/developer'
 import myBook from '@/components/book/book'
 import myBrowser from '@/components/browser/browser'
-import myTechnological from '@/components/technological/technological'
+import myTechnology from '@/components/technology/technology'
 import myBigdata from '@/components/bigdata/bigdata'
 import myDownload from '@/components/download/download'
 import myWe from '@/components/we/we'
@@ -62,9 +62,9 @@ export default new Router({
       component: myBrowser
     },
     {
-      path: "/technological",
-      name: "technological",
-      component: myTechnological
+      path: "/technology",
+      name: "technology",
+      component: myTechnology
     },
     {
       path: "/bigdata",
