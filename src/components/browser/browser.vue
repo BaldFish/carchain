@@ -923,7 +923,6 @@
         
         .count_box {
           width: 1200px;
-          // margin-top: 126px;
           margin-bottom: 36px;
           margin-left: auto;
           margin-right: auto;
@@ -938,7 +937,6 @@
               text-align: center;
               height: 40px;
               line-height: 40px;
-              
               span {
                 display: inline-block;
                 color: #ffffff;

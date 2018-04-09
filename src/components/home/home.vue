@@ -22,7 +22,7 @@
       <div class="more_scene">
         <ul>
           <li><img src="./images/01.png" alt="">
-            <p>汽车零部件行业汽车零部件行业qweq</p></li>
+            <p>汽车零部件行业</p></li>
           <li><img src="./images/02.png" alt="">
             <p>二手车交易的信息不对称</p></li>
           <li><img src="./images/03.png" alt="">
@@ -49,11 +49,11 @@
       <div class="car_data">
         <div class="car_left">
           <p>区块链技术的发展日新月异，ACRU的底层技术平台团队也将与时俱进，以打造汽车生态为目标，建立符合汽车行业生态发展的区块链技术基础平台。我们将在ACRU生态的打造过程中逐步在多个领域持续推进技术革新，以建立具有技术全球领先性的行业区块链基础设施平台。</p>
-          <a href="javascript:void(0)">了解详情</a>
+          <a href="#/technology">了解详情</a>
         </div>
         <div class="car_right">
           <p>我们一直在探索区块链技术在汽车相关行业的应用，如上述八大示范性应用场景，并将会设计和落地更多的应用场景，最终发展成为一个以ACRU区块链技术为载体的、基于汽车数据价值网络的巨大生态系统。</p>
-          <a href="javascript:void(0)">了解详情</a>
+          <a href="#/technology">了解详情</a>
         </div>
       </div>
     </div>
