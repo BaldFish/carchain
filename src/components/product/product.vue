@@ -10,10 +10,11 @@
           <img src="./images/Android.png" alt="Android">
           <p>Android版</p>
         </li>
+        <!--<li class="li_middle"></li>
         <li>
           <img src="./images/IOS.png" alt="IOS">
           <p>IOS版</p>
-        </li>
+        </li>-->
       </ul>
       <div class="middle_info">
         <img src="./images/top.png" alt="">
@@ -71,8 +72,11 @@
       font-size 0
       text-align center
       position absolute
-      top -68px
-      left 402px
+      left: 0;
+      top -68px;
+      right: 0;
+      bottom: 0;
+      margin: auto;
       li {
         font-size 20px
         display inline-block
@@ -84,11 +88,9 @@
           margin-top 20px
         }
       }
-      li:first-child {
-        margin-right 53px
-      }
-      li:last-child {
-        margin-left 53px
+      .li_middle{
+        width 106px
+        height 10px
       }
     }
     .middle_info{

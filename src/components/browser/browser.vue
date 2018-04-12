@@ -2,8 +2,8 @@
   <div class="browser_wrap">
     <div class="browser">
       <div class="browser_log" v-if="home_seen">
-        <img src="./images/logo_b.png" alt="元链">
-        <h1>元链</h1>
+        <img src="./images/logo.png" alt="元链">
+        <!--<h1>元链</h1>-->
       </div>
       <div class="search_box">
         <div class="search_select_box" @mouseleave="leaveHid">
@@ -80,9 +80,9 @@
             <ul class="info_tb saves even" v-for="(item,index) in saves">
               <li style="width:218px" class="apply">
                 <a href="javascript:void(0)">
-                  <img src="./images/logo_s.png" alt="">
+                  <img src="./images/logo_launch_small.png" alt="">
                 </a>
-                <p>北京XXXXX科技有限公司</p>
+                <p>深圳市元征科技股份有限公司</p>
               </li>
               <li style="width:662px;cursor:pointer" @click="clickSave($event)">{{item[3]}}</li>
               <li style="width:152px">{{item[1]}}</li>
@@ -140,8 +140,8 @@
         <div class="block_info_th_right">
           <h3>所属应用信息</h3>
           <div class="th_right_md">
-            <img src="./images/logo_save.png" alt="">
-            <p>北京XXXXXXXX责任有限公司</p>
+            <img src="./images/logo_launch_save.png" alt="">
+            <p>深圳市元征科技股份有限公司</p>
           </div>
         </div>
         <div class="block_info_tb">
@@ -780,7 +780,7 @@
       
       .browser_log {
         text-align: center;
-        margin-top: 280px;
+        margin-top: 230px;
         
         h1 {
           margin-top: 10px;

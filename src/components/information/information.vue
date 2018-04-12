@@ -3,15 +3,14 @@
     <div class="information_top"></div>
     <div class="information_list">
       <ul>
-        <li>
+        <li v-for="item in info_data" :key="item._id">
           <div class="info_left">
-            <img src="./images/01.png" alt="">
+            <img :src="item.picture_url" alt="">
           </div>
           <div class="info_right">
-            <h2>汾阳市长一行到访瑞卓喜投 深度探讨区块链+汾酒溯源</h2>
-            <span>2018/05/05</span>
-            <p>
-              3月7日上午，山西汾阳市市长吴晓东一行来到北京瑞卓喜投考察访问，与鑫苑科技集团执行总裁、瑞卓喜投CEO庞引明等领导共同讨论了区块链在政府建设内容，包括精准扶贫、食品溯源尤其是汾酒溯源等领域的应用前景，并深度讨论了在汾阳创建区块链产业园庞引明等领导共同讨论了区块链在政府建设内容，包括精准扶贫、食品溯源尤其是汾酒溯源等领域的应用前景，并深度讨论了在汾阳创建区块链产业园区的构想及落地实施方案区的构想及落地实施方案。与吴晓东市长同行的有：汾阳市副市长王琳、杏花村经济开发区常务副主任郝耀光、汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山西金海帆置业有限公司董事长马莉山西金海帆置业有限公司行政总监生广杰等。龙、、山汾阳市、山汾阳市国土局局局...任郝耀光、汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山西金海帆置业有限公司董事长马莉山西金海帆置业有限公司行政总监生广杰等。龙、、山汾阳市、山汾阳市国土局。</p>
+            <h2>{{item.title}}</h2>
+            <span>{{item.showTime}}</span>
+            <p>{{item.content}}</p>
           </div>
         </li>
       </ul>
@@ -22,11 +21,28 @@
 
 <script>
   import myPaging from "./paging";
+  import formatDate from "@/common/js/formatDate.js";
+  import axios from "axios";
+  import _ from "lodash";
+  let articleUrl="http://wallet-api-test.launchain.org:50000/v1/essay?page=0&limit=16";
   export default {
     name: "information",
     components: {myPaging},
     data() {
-      return {}
+      return {
+        info_data: "",
+      }
+    },
+    mounted() {
+      axios
+        .get(articleUrl)
+        .then(res => {
+          if (res.status === 200) {
+            this.info_data = res.data.info;
+          } else {
+            this.info_data = ""
+          }
+        })
     },
   }
 </script>
@@ -93,7 +109,7 @@
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 5;
           -webkit-box-orient: vertical;
         }
       }

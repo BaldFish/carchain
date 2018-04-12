@@ -41,7 +41,7 @@
           <ul>
             <li><a href="#/project">项目介绍</a></li>
             <li><a href="#/technology">技术优势</a></li>
-            <li><a href="#/developer">开发者计划</a></li>
+            <li><a href="#/developer">车链计划</a></li>
             <li><a href="#/browser">区块链浏览器</a></li>
           </ul>
         </div>
@@ -63,12 +63,12 @@
                 <p>Android版</p>
               </a>
             </li>
-            <li>
+            <!--<li>
               <a href="#/product">
                 <img src="./common/images/IOS.png" alt="IOS">
                 <p>IOS版</p>
               </a>
-            </li>
+            </li>-->
           </ul>
         </div>
       </div>
@@ -124,10 +124,10 @@
           display: inline-block;
           color #bdbdbd
           box-sizing border-box
-          padding 11px 0 10px
+          padding 9px 0 9px
           &.router-link-active, &:hover {
             color: #ffffff;
-            border-bottom 1px solid #ffffff
+            border-bottom 3px solid #ffffff
           }
         }
       }

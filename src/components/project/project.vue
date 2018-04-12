@@ -5,9 +5,9 @@
     </div>
     <div class="introduce_list">
       <ul>
-        <li><span></span>Cardata Ledger是汽车维修检测数据的完美解决方案。</li>
-        <li><span></span>Cardata Ledger基于区块链技术构建一个透明、公正、公开的全球性汽车维修检测数据生态，让相关方成为数据贡献者、生态的建设者，最终成为汽车大数据生态。</li>
-        <li><span></span>Cardata Ledger 认为收集全面、完善、高品质的汽车维修检测数据，并运用区块链技术进行存证，对于建立高效、可追溯、打通各环节的汽车后市场是有重要的、决定性的意义。</li>
+        <li><span></span>Cardata Blockchain是汽车维修检测数据的完美解决方案。</li>
+        <li><span></span>Cardata Blockchain基于区块链技术构建一个透明、公正、公开的全球性汽车维修检测数据生态，让相关方成为数据贡献者、生态的建设者，最终成为汽车大数据生态。</li>
+        <li><span></span>Cardata Blockchain 认为收集全面、完善、高品质的汽车维修检测数据，并运用区块链技术进行存证，对于建立高效、可追溯、打通各环节的汽车后市场是有重要的、决定性的意义。</li>
       </ul>
     </div>
   </div>

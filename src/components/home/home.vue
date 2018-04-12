@@ -10,7 +10,7 @@
         <p></p>
       </div>
       <div class="vision">
-        <p>基于区块链技术的汽车数据生态（ACRU），将汽车的维修检测数据转化为有价值的数据资产，利用区块链技术分布式、不可篡改及价值传输的特点，使数据所有方，车主、维修人员、平台方等获得数据确权，通过数据需求方对数据资产的利用、互换、开发等形成强大的生态系统，从而产生更多的价值。</p>
+        <p>基于区块链技术的汽车数据生态（CDB），将汽车的维修检测数据转化为有价值的数据资产，利用区块链技术分布式、不可篡改及价值传输的特点，使数据所有方，车主、维修人员、平台方等获得数据确权，通过数据需求方对数据资产的利用、互换、开发等形成强大的生态系统，从而产生更多的价值。</p>
       </div>
     </div>
     <div class="box3">
@@ -28,13 +28,13 @@
           <li><img src="./images/03.png" alt="">
             <p>新车交易的信息不对称</p></li>
           <li class="no_margin"><img src="./images/04.png" alt="">
-            <p>协助汽车维修</p></li>
+            <p>智能汽车维修</p></li>
           <li><img src="./images/05.png" alt="">
             <p>协助汽车制造厂改进质量</p></li>
           <li><img src="./images/06.png" alt="">
             <p>协助追回被盗窃车辆</p></li>
           <li><img src="./images/07.png" alt="">
-            <p>协助车险定价和理赔</p></li>
+            <p>智能车险定价和理赔</p></li>
           <li class="no_margin"><img src="./images/08.png" alt="">
             <p>支持汽车金融</p></li>
         </ul>
@@ -48,90 +48,57 @@
       </div>
       <div class="car_data">
         <div class="car_left">
-          <p>区块链技术的发展日新月异，ACRU的底层技术平台团队也将与时俱进，以打造汽车生态为目标，建立符合汽车行业生态发展的区块链技术基础平台。我们将在ACRU生态的打造过程中逐步在多个领域持续推进技术革新，以建立具有技术全球领先性的行业区块链基础设施平台。</p>
+          <p>区块链技术的发展日新月异，CDB的底层技术平台团队也将与时俱进，以打造汽车生态为目标，建立符合汽车行业生态发展的区块链技术基础平台。我们将在CDB生态的打造过程中逐步在多个领域持续推进技术革新，以建立具有技术全球领先性的行业区块链基础设施平台。</p>
           <a href="#/technology">了解详情</a>
         </div>
         <div class="car_right">
-          <p>我们一直在探索区块链技术在汽车相关行业的应用，如上述八大示范性应用场景，并将会设计和落地更多的应用场景，最终发展成为一个以ACRU区块链技术为载体的、基于汽车数据价值网络的巨大生态系统。</p>
+          <p>我们一直在探索区块链技术在汽车相关行业的应用，如上述八大示范性应用场景，并将会设计和落地更多的应用场景，最终发展成为一个以CDB区块链技术为载体的、基于汽车数据价值网络的巨大生态系统。</p>
           <a href="#/technology">了解详情</a>
         </div>
       </div>
     </div>
-    <div class="box5">
+    <!--<div class="box5">
       <div class="headline">
         <p></p>
         <span>资讯</span>
         <p></p>
       </div>
-      <div class="info_data">
+      <div class="info_data" v-for="item in info_data" :key="item._id">
         <div class="info_left">
-          <img src="./images/9.png" alt="">
+          <img :src="item.picture_url" alt="">
         </div>
         <div class="info_right">
-          <h2>汾阳市长一行到访瑞卓喜投 深度探讨区块链+汾酒溯源</h2>
-          <span>2018/05/05</span>
-          <p>
-            3月7日上午，山西汾阳市市长吴晓东一行来到北京瑞卓喜投考察访问，与鑫苑科技集团执行总裁、瑞卓喜投CEO庞引明等领导共同讨论了区块链在政府建设内容，包括精准扶贫、食品溯源尤其是汾酒溯源等领域的应用前景，并深度讨论了在汾阳创建区块链产业园庞引明等领导共同讨论了区块链在政府建设内容，包括精准扶贫、食品溯源尤其是汾酒溯源等领域的应用前景，并深度讨论了在汾阳创建区块链产业园区的构想及落地实施方案区的构想及落地实施方案。与吴晓东市长同行的有：汾阳市副市长王琳、杏花村经济开发区常务副主任郝耀光、汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山西金海帆置业有限公司董事长马莉山西金海帆置业有限公司行政总监生广杰等。龙、、山汾阳市、山汾阳市国土局局局...任郝耀光、汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山汾阳市国土局局长董士元、汾阳市招商局长王兆龙、山西金海帆置业有限公司董事长马莉山西金海帆置业有限公司行政总监生广杰等。龙、、山汾阳市、山汾阳市国土局。</p>
+          <h2>{{item.title}}</h2>
+          <span>{{item.showTime}}</span>
+          <p>{{item.content}}</p>
         </div>
       </div>
       <div class="info_data_more"><a href="#/information">查看更多</a></div>
-    </div>
+    </div>-->
     <div class="box6">
       <div class="headline">
         <p></p>
         <span>合作伙伴</span>
         <p></p>
-        <span class="refresh"><img src="./images/refresh.png" alt="换一批"></span>
+        <!--<span class="refresh"><img src="./images/refresh.png" alt="换一批"></span>-->
       </div>
       <div class="partner_data">
         <ul>
           <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
+            <div><img src="./images/partner_launch.jpg" alt="元征"></div>
+            <p>深圳市元征科技股份有限公司</p>
           </li>
           <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
+            <div><img src="./images/partner_beimai.png" alt="北迈网"></div>
+            <p>北京北迈科技股份有限公司</p>
           </li>
           <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
+            <div><img src="./images/partner_feibotong.png" alt="飞泊通"></div>
+            <p>深圳市天行家科技有限公司</p>
           </li>
           <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li class="lm_none">
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li>
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
-          </li>
-          <li class="lm_none">
-            <div><img src="./images/logo_rw.png" alt=""></div>
-            <p>元征集团</p>
+            <div><img src="./images/partner_golo.png" alt="轱辘"></div>
+            <p>深圳市轱辘车联数据技术有限公司</p>
           </li>
         </ul>
       </div>
@@ -140,10 +107,28 @@
 </template>
 
 <script>
+  import formatDate from "@/common/js/formatDate.js";
+  import axios from "axios";
+  import _ from "lodash";
+  
+  const articleUrl = "http://wallet-api-test.launchain.org:50000/v1/essay?page=0&limit=1";
   export default {
     name: "home",
     data() {
-      return {}
+      return {
+        info_data: "",
+      }
+    },
+    mounted() {
+      axios
+        .get(articleUrl)
+        .then(res => {
+          if (res.status === 200) {
+            this.info_data = res.data.info;
+          } else {
+            this.info_data = ""
+          }
+        })
     },
   }
 </script>
@@ -174,7 +159,7 @@
       box-sizing border-box
       padding-top 90px
       height 800px
-      background-image: url('./images/cardataledger.png');
+      background-image: url('./images/cardatablockchain.png');
       background-position: top center;
       background-repeat: no-repeat;
       p {
@@ -296,8 +281,8 @@
         margin-top 50px
         position relative
         .info_left {
-          width 424px
-          height 424px
+          width 400px
+          height 290px
           text-align center
           img {
             width 100%
@@ -380,19 +365,20 @@
         font-size 0
         text-align center
         li {
-          width 190px
+          width 188px
           height 90px
           display inline-block
           text-align center
           background-color #ffffff
-          margin-right 12px
+          margin-left 6px
+          margin-right 6px
           margin-bottom 15px
           line-height 90px
           font-size 18px
           vertical-align top
           div {
             display: table-cell;
-            width 190px
+            width 188px
             height 90px
             vertical-align: middle;
             text-align: center;
@@ -412,11 +398,14 @@
             display none
           }
           p {
+            line-height 20px
+            width 188px
             display block
+            word-wrap:break-word;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
           }
-        }
-        .lm_none {
-          margin-right 0
         }
       }
     }
