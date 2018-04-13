@@ -97,8 +97,12 @@
             <p>深圳市天行家科技有限公司</p>
           </li>
           <li>
-            <div><img src="./images/partner_golo.png" alt="轱辘"></div>
+            <div><img src="./images/partner_golo.png" alt="深圳市轱辘车联数据技术有限公司"></div>
             <p>深圳市轱辘车联数据技术有限公司</p>
+          </li>
+          <li>
+            <div><img src="./images/partner_aiot.jpg" alt="深圳市物联网智能技术应用协会"></div>
+            <p>深圳市物联网智能技术应用协会</p>
           </li>
         </ul>
       </div>
@@ -107,9 +111,7 @@
 </template>
 
 <script>
-  import formatDate from "@/common/js/formatDate.js";
   import axios from "axios";
-  import _ from "lodash";
   
   const articleUrl = "http://wallet-api-test.launchain.org:50000/v1/essay?page=0&limit=1";
   export default {
@@ -394,14 +396,18 @@
           cursor pointer
           background-color: #008ffe;
           box-shadow: 0px 3px 9px 0px rgba(0, 143, 254, 0.33);
+          padding-left 5px
+          padding-right 5px
+          width 178px
           div {
             display none
           }
           p {
             line-height 20px
-            width 188px
+            width 178px
             display block
-            word-wrap:break-word;
+            font-size 14px
+            word-wrap: break-word;
             position: relative;
             top: 50%;
             transform: translateY(-50%);

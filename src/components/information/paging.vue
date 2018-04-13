@@ -40,20 +40,20 @@ export default {
     //每页显示条数
     pageSize: {
       type: Number,
-      default: 1
+      default: 5
     },
 
     //总记录数
     total: {
       type: Number,
-      default: 20
+      default: 10
     }
   },
   data() {
     return {
       index: this.pageIndex, //当前页码
       limit: this.pageSize, //每页显示条数
-      size: this.total || 1, //总记录数
+      size: this.total, //总记录数
       showPrevMore: false,
       showNextMore: false
     };
@@ -136,7 +136,7 @@ export default {
       this.limit = val || 5;
     },
     total(val) {
-      this.size = val || 1;
+      this.size = val || 10;
     }
   }
 };

@@ -30,6 +30,9 @@
             <router-link to="/browser">区块链浏览器</router-link>
           </li>
         </ul>
+        <ul class="toggle">
+          <li><a href="https://www.google.com/">English</a></li>
+        </ul>
       </div>
     </div>
     <router-view class="main"></router-view>
@@ -106,6 +109,7 @@
     height: 90px;
     background-color: rgba(0, 0, 0, 0.47);
     .head {
+      position relative
       box-sizing: border-box
       width: 1200px;
       margin: 0 auto;
@@ -129,6 +133,17 @@
             color: #ffffff;
             border-bottom 3px solid #ffffff
           }
+        }
+      }
+      .toggle{
+        position absolute
+        top 50%
+        transform translateY(-50%)
+        right 0
+        a{
+          display block
+          padding 10px
+          font-size 14px
         }
       }
     }

@@ -10,9 +10,8 @@ import myBook from '@/components/book/book'
 import myBrowser from '@/components/browser/browser'
 import myTechnology from '@/components/technology/technology'
 import myBigdata from '@/components/bigdata/bigdata'
-import myDownload from '@/components/download/download'
-import myWe from '@/components/we/we'
-
+import myInfo1 from '@/components/information/info1'
+import myInfo2 from '@/components/information/info2'
 Vue.use(Router)
 
 export default new Router({
@@ -72,14 +71,14 @@ export default new Router({
       component: myBigdata
     },
     {
-      path: "/download",
-      name: "download",
-      component: myDownload
+      path: "/info1",
+      name: "info1",
+      component: myInfo1
     },
     {
-      path: "/we",
-      name: "we",
-      component: myWe
+      path: "/info2",
+      name: "info2",
+      component: myInfo2
     },
   ]
 })
