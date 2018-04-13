@@ -31,7 +31,7 @@
           </li>
         </ul>
         <ul class="toggle">
-          <li><a href="https://www.google.com/">English</a></li>
+          <li><a href="http://global.cdblockchain.io/">English</a></li>
         </ul>
       </div>
     </div>
@@ -135,12 +135,12 @@
           }
         }
       }
-      .toggle{
+      .toggle {
         position absolute
         top 50%
         transform translateY(-50%)
         right 0
-        a{
+        a {
           display block
           padding 10px
           font-size 14px
