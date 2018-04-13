@@ -194,9 +194,10 @@
   import formatDate from "@/common/js/formatDate.js";
   import axios from "axios";
   import _ from "lodash";
-  
-  const reqURL = "http://wallet-api-test.launchain.org:50000";
-  const tradeURL = "http://wallet-api-test.launchain.org:50000/v1/txn";
+
+  const reqURL = "https://wallet-api.launchain.org";
+  const contractAddress="0x4D65E4D6151BA154Cd9Bf0Fb21b01884e6C2F130"
+  const tradeURL = "https://wallet-api.launchain.org/v1/txn";
   //实例化web3对象
   var Web3 = require("web3");
   var web3 = new Web3();
@@ -361,9 +362,7 @@
     }
   ];
   var MyContract = web3.eth.contract(abi);
-  var myContractInstance = MyContract.at(
-    "0x3f01a034865808e902Cf0DB1ADe4D850C523B234"
-  );
+  var myContractInstance = MyContract.at(contractAddress);
   export default {
     name: "browser",
     data() {
