@@ -31,7 +31,7 @@
           </li>
         </ul>
         <ul class="toggle">
-          <li><a href="https://www.google.com/">English</a></li>
+          <li><a href="http://global.cdblockchain.io/">English</a></li>
         </ul>
       </div>
     </div>

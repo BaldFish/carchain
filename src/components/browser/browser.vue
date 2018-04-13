@@ -197,6 +197,7 @@
   
   const reqURL = "http://wallet-api-test.launchain.org:50000";
   const tradeURL = "http://wallet-api-test.launchain.org:50000/v1/txn";
+  const contractAddress = "0x3f01a034865808e902Cf0DB1ADe4D850C523B234"
   //实例化web3对象
   var Web3 = require("web3");
   var web3 = new Web3();
@@ -361,9 +362,7 @@
     }
   ];
   var MyContract = web3.eth.contract(abi);
-  var myContractInstance = MyContract.at(
-    "0x3f01a034865808e902Cf0DB1ADe4D850C523B234"
-  );
+  var myContractInstance = MyContract.at(contractAddress);
   export default {
     name: "browser",
     data() {

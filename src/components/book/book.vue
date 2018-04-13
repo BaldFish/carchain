@@ -17,7 +17,7 @@
 </script>
 
 <style scoped lang="stylus">
-  .book{
+  .book {
     background-color #000000
     padding-top 90px
     height 749px

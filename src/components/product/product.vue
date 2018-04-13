@@ -88,19 +88,19 @@
           margin-top 20px
         }
       }
-      .li_middle{
+      .li_middle {
         width 106px
         height 10px
       }
     }
-    .middle_info{
+    .middle_info {
       font-size 0
       padding-bottom 100px
-      img{
+      img {
         vertical-align top
         margin-top 100px
       }
-      .info_p{
+      .info_p {
         display inline-block
         max-width 460px
         font-size 30px
@@ -122,10 +122,10 @@
     width 1200px
     margin 0 auto
     color #222222
-    .middle_info{
+    .middle_info {
       font-size 0
       padding-bottom 100px
-      .info_p{
+      .info_p {
         display inline-block
         width 384px
         font-size 30px
@@ -133,7 +133,7 @@
         margin-top 230px
         margin-left 200px
       }
-      img{
+      img {
         vertical-align top
         margin-top 100px
       }
