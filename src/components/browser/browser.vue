@@ -195,9 +195,9 @@
   import axios from "axios";
   import _ from "lodash";
   
-  const reqURL = "http://wallet-api-test.launchain.org:50000";
-  const tradeURL = "http://wallet-api-test.launchain.org:50000/v1/txn";
-  const contractAddress = "0x3f01a034865808e902Cf0DB1ADe4D850C523B234";
+  const reqURL = "https://wallet-api.launchain.cn";
+  const tradeURL = "https://wallet-api.launchain.cn/v1/txn";
+  const contractAddress = "0x4D65E4D6151BA154Cd9Bf0Fb21b01884e6C2F130";
   //实例化web3对象
   var Web3 = require("web3");
   var web3 = new Web3();
