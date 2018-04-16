@@ -194,10 +194,10 @@
   import formatDate from "@/common/js/formatDate.js";
   import axios from "axios";
   import _ from "lodash";
-
   const reqURL = "https://wallet-api.launchain.org";
   const contractAddress="0x4D65E4D6151BA154Cd9Bf0Fb21b01884e6C2F130"
   const tradeURL = "https://wallet-api.launchain.org/v1/txn";
+
   //实例化web3对象
   var Web3 = require("web3");
   var web3 = new Web3();
@@ -417,27 +417,54 @@
         });
       //获取存证数量
       this.saveCounts = myContractInstance.attestsNunber().c.toString();
+      
       //获取最新10个区块信息
       var blockCounts = this.blockNumbers;
-      for (var i = blockCounts; i > blockCounts - 10; i--) {
-        var info = web3.eth.getBlock(i);
-        info.timestamp = formatDate(
-          new Date(info.timestamp * 1000),
-          "yyyy-MM-dd hh:mm:ss"
-        );
-        blocks.push(info);
+      //如果区块数大于等于10取10块区块信息
+      if (blockCounts > 9) {
+        for (var i = blockCounts; i > blockCounts - 10; i--) {
+          var info = web3.eth.getBlock(i);
+          info.timestamp = formatDate(
+            new Date(info.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          blocks.push(info);
+        }
+        this.blocks = blocks;
+        // .sort(function(a, b) {
+        //         return b.number - a.number;
+        //       });
+      } else {//如果区块数小10则全部取出区块信息
+        for (var i = blockCounts; i > 0; i--) {
+          var info = web3.eth.getBlock(i);
+          info.timestamp = formatDate(
+            new Date(info.timestamp * 1000),
+            "yyyy-MM-dd hh:mm:ss"
+          );
+          blocks.push(info);
+        }
+        this.blocks = blocks;
+        // .sort(function(a, b) {
+        //         return b.number - a.number;
+        //       });
       }
-      this.blocks = blocks;
-      // .sort(function(a, b) {
-      //         return b.number - a.number;
-      //       });
+      
       //获取最新10个存证信息
       var counts = this.saveCounts - 1;
-      for (var i = counts; i > counts - 10; i--) {
-        saves.push(myContractInstance.attestByIndex(i));
-        this.saves = saves.sort(function (a, b) {
-          return b[4] - a[4];
-        });
+      if (counts > 8) {//如果存证数大于等于10取10个存证信息
+        for (var i = counts; i > counts - 10; i--) {
+          saves.push(myContractInstance.attestByIndex(i));
+          this.saves = saves.sort(function (a, b) {
+            return b[4] - a[4];
+          });
+        }
+      } else {//如果存证数小于10全部取出存证信息
+        for (var i = counts; i > -1; i--) {
+          saves.push(myContractInstance.attestByIndex(i));
+          this.saves = saves.sort(function (a, b) {
+            return b[4] - a[4];
+          });
+        }
       }
       //每隔15秒重新获取数据
       var that = this;
@@ -466,7 +493,10 @@
               "yyyy-MM-dd hh:mm:ss"
             );
             blocks.unshift(newInfo);
-            blocks.pop();
+            // blocks.pop();
+            if (blocks.length > 10) {
+              blocks.pop();
+            }
           }
           that.blocks = blocks;
           // .sort(function(a, b) {
@@ -482,6 +512,9 @@
               "yyyy-MM-dd hh:mm:ss"
             );
             blocks.push(info);
+            if (blocks.length > 10) {
+              blocks.pop();
+            }
           }
           that.blocks = blocks;
           // .sort(function(a, b) {
@@ -500,7 +533,10 @@
               saves.unshift(
                 myContractInstance.attestByIndex(parseInt(that.saveCounts) + i)
               );
-              saves.pop();
+              // saves.pop();
+              if (saves.length > 10) {
+                saves.pop();
+              }
               that.saves = saves.sort(function (a, b) {
                 return b[4] - a[4];
               });
@@ -510,7 +546,10 @@
               saves.unshift(
                 myContractInstance.attestByIndex(parseInt(that.saveCounts) + i)
               );
-              saves.pop();
+              // saves.pop();
+              if (saves.length > 10) {
+                saves.pop();
+              }
               that.saves = saves.sort(function (a, b) {
                 return b[4] - a[4];
               });
@@ -518,7 +557,7 @@
           }
           that.saveCounts = newSaveCounts;
         }
-      }, 15000);
+      }, 10000);
     },
     watch: {
       //获取最新出块时间
