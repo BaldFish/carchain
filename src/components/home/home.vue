@@ -137,7 +137,7 @@
 
 <style scoped lang="stylus">
   .home {
-    min-width 1200px
+    min-width 1224px
     .headline {
       font-size 0;
       color: #008ffe;
@@ -200,6 +200,7 @@
         width 1200px
         margin 0 auto
         ul {
+          margin 0 auto
           font-size 0
           text-align center
           padding-top 90px

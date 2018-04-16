@@ -76,7 +76,6 @@
             if (res.status === 200) {
               this.info_data = res.data.info;
               this.count = res.data.count
-              console.log(res.data.info)
             } else {
               this.info_data = "";
               this.count = 10;

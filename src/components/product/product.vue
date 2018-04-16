@@ -10,11 +10,11 @@
           <img src="./images/Android.png" alt="Android">
           <p>Android版</p>
         </li>
-        <!--<li class="li_middle"></li>
+        <li class="li_middle"></li>
         <li>
           <img src="./images/IOS.png" alt="IOS">
           <p>IOS版</p>
-        </li>-->
+        </li>
       </ul>
       <div class="middle_info">
         <img src="./images/top.png" alt="">

@@ -66,12 +66,12 @@
                 <p>Android版</p>
               </a>
             </li>
-            <!--<li>
+            <li>
               <a href="#/product">
                 <img src="./common/images/IOS.png" alt="IOS">
                 <p>IOS版</p>
               </a>
-            </li>-->
+            </li>
           </ul>
         </div>
       </div>
@@ -97,7 +97,7 @@
 
 <style lang="stylus">
   #app {
-    min-height: 100vh;
+    /*min-height: 100vh;*/
     display: flex;
     flex-direction: column;
   }
@@ -139,7 +139,7 @@
         position absolute
         top 50%
         transform translateY(-50%)
-        right 0
+        right 20px
         a{
           display block
           padding 10px
