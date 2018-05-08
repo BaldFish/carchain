@@ -45,7 +45,7 @@
           </a>
         </li>-->
       </ul>
-      <!--<my-paging :page-index="currentPage" :total="count" :page-size="pageSize" @change="pageChange"></my-paging>-->
+      <my-paging :page-index="currentPage" :total="count" :page-size="pageSize" @change="pageChange"></my-paging>
     </div>
   </div>
 </template>
@@ -53,7 +53,7 @@
 <script>
   import myPaging from "./paging";
   import axios from "axios";
-  
+  import {baseURL} from '@/common/js/public.js';
   export default {
     name: "information",
     components: {myPaging},//显示的声明组件
@@ -68,10 +68,9 @@
     methods: {
       //获取数据
       getList() {
-        let articleUrl = `http://wallet-api-test.launchain.org:50000/v1/essay?page=${this.currentPage - 1}&limit=${this.pageSize}`;
         //子组件监听到count变化会自动更新DOM
         axios
-          .get(articleUrl)
+          .get(`${baseURL}/v1/essay?page=${this.currentPage - 1}&limit=${this.pageSize}`)
           .then(res => {
             if (res.status === 200) {
               this.info_data = res.data.info;
