@@ -12,6 +12,7 @@ import myTechnology from '@/components/technology/technology'
 import myBigdata from '@/components/bigdata/bigdata'
 import myInfo1 from '@/components/information/info1'
 import myInfo2 from '@/components/information/info2'
+import myInfo from '@/components/information/info'
 Vue.use(Router)
 
 export default new Router({
@@ -79,6 +80,11 @@ export default new Router({
       path: "/info2",
       name: "info2",
       component: myInfo2
+    },
+    {
+      path: "/info",
+      name: "info",
+      component: myInfo
     },
   ]
 })

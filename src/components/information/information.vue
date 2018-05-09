@@ -32,20 +32,31 @@
             </div>
           </a>
         </li>
-        <!--<li v-for="item in info_data" :key="item._id">
+        <li v-for="item in articleList" :key="item._id">
           <div class="info_left">
             <img :src="item.picture_url" alt="">
           </div>
-          <a href="#/info1">
+          <a href="javascript:void(0);">
             <div class="info_right">
               <h2>{{item.title}}</h2>
               <span>{{item.showTime}}</span>
               <div class="article_content" v-html="item.content"></div>
             </div>
           </a>
-        </li>-->
+        </li>
       </ul>
-      <my-paging :page-index="currentPage" :total="count" :page-size="pageSize" @change="pageChange"></my-paging>
+      <!--<my-paging :page-index="currentPage" :total="count" :page-size="pageSize" @change="pageChange"></my-paging>-->
+      <div class="block" style="text-align:center">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-size=5
+          :page-sizes="[5,10, 20, 30]"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total=total>
+        </el-pagination>
+      </div>
     </div>
   </div>
 </template>
@@ -59,14 +70,43 @@
     components: {myPaging},//显示的声明组件
     data() {
       return {
-        pageSize: 2, //每页显示多少条数据
+       /* pageSize: 2, //每页显示多少条数据
         currentPage: 1, //默认当前页码
         count: 10, //默认总记录数
-        info_data: [],
+        info_data: [],*/
+        page:0,
+        limit:5,//每页显示多少条数据
+        currentPage:1,//默认当前页码
+        total: 20,//默认总记录数
+        articleList:[]
       }
     },
     methods: {
-      //获取数据
+      handleSizeChange(val) {
+        this.limit=val;
+        this.getArticleList()
+      },
+      handleCurrentChange(val) {
+        this.page=val-1;
+        this.getArticleList()
+      },
+      //分页获取文章列表数据
+      getArticleList(){
+        axios({
+          method: "GET",
+          url: `${baseURL}/v1/essay?page=${this.page}&limit=${this.limit}`
+        })
+          .then(res => {
+            this.articleList = res.data.info;
+            this.total = res.data.count
+            console.log(this.articleList)
+            console.log(this.total)
+          })
+          .catch(error => {
+            this.articleList = [];
+          });
+      },
+      /*//分页获取文章列表数据
       getList() {
         //子组件监听到count变化会自动更新DOM
         axios
@@ -85,11 +125,12 @@
       pageChange(page) {
         this.currentPage = page;
         this.getList();
-      }
+      }*/
     },
     mounted() {
       //请求第一页数据
-      this.getList();
+      // this.getList();
+      this.getArticleList()
     },
   }
 </script>
