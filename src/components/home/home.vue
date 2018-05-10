@@ -112,8 +112,7 @@
 
 <script>
   import axios from "axios";
-  
-  const articleUrl = "http://wallet-api-test.launchain.org:50000/v1/essay?page=0&limit=1";
+  import {baseURL} from '@/common/js/public.js';
   export default {
     name: "home",
     data() {
@@ -123,7 +122,7 @@
     },
     mounted() {
       axios
-        .get(articleUrl)
+        .get(`${baseURL}/v1/essay?page=0&limit=1`)
         .then(res => {
           if (res.status === 200) {
             this.info_data = res.data.info;
