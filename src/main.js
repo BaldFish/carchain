@@ -14,11 +14,14 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 const store = new Vuex.Store({
-  state:{
-    clickArticleData:"",
+  state: {
+    clickArticleData: "",
   },
-  mutations:{
-    changeArticleData(){}
+  mutations: {
+    changeArticleData(state, params) {
+      state.clickArticleData = params;
+      window.sessionStorage.setItem("clickData", JSON.stringify(state.clickArticleData))
+    }
   }
 });
 new Vue({

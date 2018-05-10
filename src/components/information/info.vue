@@ -1,11 +1,10 @@
 <template>
   <div class="info_wrap">
     <div class="info">
-      <h2></h2>
-      <span></span>
-      <img src="" alt="">
-      <div class="content">
-      
+      <h2>{{articleData.title}}</h2>
+      <span>{{articleData.show_time}}</span>
+      <img :src="articleData.picture_url" alt="">
+      <div class="content" v-html="articleData.content">
       </div>
     </div>
   </div>
@@ -15,8 +14,14 @@
   export default {
     name: "info",
     data() {
-      return {}
+      return {
+        articleData: this.$store.state.clickArticleData
+      }
     },
+    mounted() {
+      this.articleData = this.$store.state.clickArticleData
+      this.articleData = JSON.parse(sessionStorage.getItem("clickData"))
+    }
   }
 </script>
 
@@ -44,21 +49,7 @@
       margin-bottom 20px
     }
     .content {
-      p {
-        text-indent 2em
-        text-align left
-        line-height 2
-        color #333333
-        font-size 14px
-      }
-      h3 {
-        text-indent 2em
-        text-align left
-        line-height 1.5
-        color #333333
-        font-weight bold
-        font-size 16px
-      }
+      text-align left
     }
   }
 </style>
