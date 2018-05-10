@@ -135,12 +135,12 @@
           }
         }
       }
-      .toggle{
+      .toggle {
         position absolute
         top 50%
         transform translateY(-50%)
         right 20px
-        a{
+        a {
           display block
           padding 10px
           font-size 14px
