@@ -68,7 +68,7 @@
         </div>
         <div class="info_box">
           <div class="info_title">
-            <h2>最新存证</h2>
+            <h2>最新资产</h2>
           </div>
           <div class="info">
             <ul class="info_th">

@@ -1,6 +1,11 @@
 <template>
   <div class="information">
     <div class="information_top"></div>
+    <div class="tabs_box">
+      <ul class="tabs">
+        <li class="li-tab" v-for="(item,index) of tabsParam" @click="toggleTabs(index)" :class="{active:index!=nowIndex}">{{item}}</li>
+      </ul>
+    </div>
     <div class="information_list">
       <ul>
         <li v-for="item in articleList" :key="item._id" :name="item._id">
@@ -19,7 +24,7 @@
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage"
+          :current-page.sync="currentPage"
           :page-size=5
           :page-sizes="[5,10, 20, 30]"
           layout="total, sizes, prev, pager, next, jumper"
@@ -49,10 +54,19 @@
         currentPage: 1,//默认当前页码
         total: 20,//默认总记录数
         articleList: [],
-        clickArticleData: ""
+        clickArticleData: "",
+        article_type:[],
+        tabsParam:["全部"],
+        nowIndex:0,
       }
     },
     methods: {
+      toggleTabs(index){
+        this.nowIndex=index;
+        this.page=0;
+        this.currentPage=1
+        this.getArticleList();
+      },
       getArticleData(event) {
         var id=event.currentTarget.parentNode.getAttribute("name");
         this.clickArticleData=_.find(this.articleList,function (o) {
@@ -63,21 +77,24 @@
       },
       handleSizeChange(val) {
         this.limit = val;
+        console.log(val)
         this.getArticleList()
       },
       handleCurrentChange(val) {
-        this.page = val - 1;
+        console.log(val);
+        this.page = val-1;
         this.getArticleList()
       },
       //分页获取文章列表数据
       getArticleList() {
         axios({
           method: "GET",
-          url: `${baseURL}/v1/essay?page=${this.page}&limit=${this.limit}`
+          url: `${baseURL}/v1/essay?page=${this.page}&limit=${this.limit}&essay_catg=${this.nowIndex}`
         })
           .then(res => {
             this.articleList = res.data.info;
             this.total = res.data.count
+            console.log(this.articleList)
           })
           .catch(error => {
             this.articleList = [];
@@ -108,6 +125,21 @@
       //请求第一页数据
       // this.getList();
       this.getArticleList()
+      //获取文章类型
+      axios({
+        method: "GET",
+        url:
+          `${baseURL}/v1/essay-catg/all`
+      })
+        .then(res => {
+          this.article_type = res.data;
+          this.article_type.forEach((item)=>{
+            this.tabsParam.push(item.category_name)
+          })
+        })
+        .catch(error => {
+          this.article_type = [];
+        });
     },
   }
 </script>
@@ -121,6 +153,36 @@
       background-image: url('./images/banner.png');
       background-position: top center;
       background-repeat: no-repeat;
+    }
+    .tabs_box{
+      text-align center
+      position relative
+      top -30px
+      .tabs{
+        display inline-block
+        text-align center
+        font-size 0
+        box-shadow: 1px 8px 36px 3px rgba(125, 223, 255, 0.31);
+        .li-tab{
+          box-sizing border-box
+          font-size 24px
+          color #ffffff
+          background-color: #00c0ff;
+          display inline-block
+          width 140px
+          height 60px
+          line-height 60px
+          border-right 1px solid #eeeeee
+          cursor pointer
+        }
+        .li-tab:last-child{
+          border-right none
+        }
+        .active{
+          background-color: #ffffff;
+          color #666666
+        }
+      }
     }
     .information_list {
       box-sizing border-box
@@ -175,6 +237,9 @@
             display: -webkit-box;
             -webkit-line-clamp: 0;
             -webkit-box-orient: vertical;
+            p{
+              color antiquewhite
+            }
           }
         }
       }

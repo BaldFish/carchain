@@ -18,7 +18,10 @@
             <router-link to="/scene">应用场景</router-link>
           </li>
           <li class="nav">
-            <router-link to="/product">产品介绍</router-link>
+            <router-link to="/product">钱包下载</router-link>
+          </li>
+          <li class="nav">
+            <router-link to="/join">加入车链</router-link>
           </li>
           <li class="nav">
             <router-link to="/developer">开发者计划</router-link>
