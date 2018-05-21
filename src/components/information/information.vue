@@ -77,11 +77,11 @@
       },
       handleSizeChange(val) {
         this.limit = val;
-        console.log(val)
+        //console.log(val)
         this.getArticleList()
       },
       handleCurrentChange(val) {
-        console.log(val);
+        //console.log(val);
         this.page = val-1;
         this.getArticleList()
       },
@@ -94,7 +94,6 @@
           .then(res => {
             this.articleList = res.data.info;
             this.total = res.data.count
-            console.log(this.articleList)
           })
           .catch(error => {
             this.articleList = [];
