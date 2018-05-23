@@ -5,6 +5,7 @@ import myProject from '@/components/project/project'
 import myInformation from '@/components/information/information'
 import myScene from '@/components/scene/scene'
 import myProduct from '@/components/product/product'
+import myJoin from '@/components/join/join'
 import myDeveloper from '@/components/developer/developer'
 import myBook from '@/components/book/book'
 import myBrowser from '@/components/browser/browser'
@@ -45,6 +46,11 @@ export default new Router({
       path: "/product",
       name: "product",
       component: myProduct
+    },
+    {
+      path: "/join",
+      name: "join",
+      component: myJoin
     },
     {
       path: "/developer",

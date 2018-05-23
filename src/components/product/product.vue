@@ -24,8 +24,8 @@
         </div>
       </div>
     </div>
-    <div class="line"></div>
-    <div class="product_buttom">
+    <!--<div class="line"></div>-->
+    <!--<div class="product_buttom">
       <div class="middle_info">
         <div class="info_p">
           <p>内置交易市场</p>
@@ -33,7 +33,7 @@
         </div>
         <img src="./images/down.png" alt="">
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 

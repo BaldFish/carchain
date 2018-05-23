@@ -41,7 +41,7 @@
               <span>{{transactionCounts}}</span>
             </li>
             <li>
-              <span>存证数量：</span>
+              <span>资产数量：</span>
               <span>{{saveCounts}}</span>
             </li>
           </ul>
@@ -68,13 +68,13 @@
         </div>
         <div class="info_box">
           <div class="info_title">
-            <h2>最新存证</h2>
+            <h2>最新资产</h2>
           </div>
           <div class="info">
             <ul class="info_th">
               <li style="width:164px">所属应用</li>
-              <li style="width:716px">存证哈希</li>
-              <li style="width:152px">存证类型</li>
+              <li style="width:716px">资产ID</li>
+              <li style="width:152px">资产类型</li>
               <li style="width:168px">存证时间</li>
             </ul>
             <ul class="info_tb saves even" v-for="(item,index) in saves">
