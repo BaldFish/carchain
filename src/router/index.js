@@ -9,6 +9,7 @@ import myJoin from '@/components/join/join'
 import myDeveloper from '@/components/developer/developer'
 import myBook from '@/components/book/book'
 import myBrowser from '@/components/browser/browser'
+import myList from '@/components/browser/list'
 import myTechnology from '@/components/technology/technology'
 import myBigdata from '@/components/bigdata/bigdata'
 import myInfo1 from '@/components/information/info1'
@@ -64,8 +65,19 @@ export default new Router({
     },
     {
       path: "/browser",
-      name: "browser",
-      component: myBrowser
+      //name: "browser",
+      component: myBrowser,
+      children:[
+        {
+          path: '',
+          redirect:"list",
+        },
+        {
+          path: '/browser/list',
+          name: 'list',
+          component: myList
+        },
+      ]
     },
     {
       path: "/technology",
