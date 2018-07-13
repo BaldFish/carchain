@@ -10,12 +10,16 @@ import myDeveloper from '@/components/developer/developer'
 import myBook from '@/components/book/book'
 import myBrowser from '@/components/browser/browser'
 import myList from '@/components/browser/list'
+import myBlockDetails from '@/components/browser/blockDetails'
+import myAssetDetails from '@/components/browser/assetDetails'
+import myTradeDetails from '@/components/browser/tradeDetails'
+import myBalanceDetails from '@/components/browser/balanceDetails'
 import myTechnology from '@/components/technology/technology'
 import myBigdata from '@/components/bigdata/bigdata'
 import myInfo1 from '@/components/information/info1'
 import myInfo2 from '@/components/information/info2'
 import myInfo from '@/components/information/info'
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -76,6 +80,26 @@ export default new Router({
           path: '/browser/list',
           name: 'list',
           component: myList
+        },
+        {
+          path: '/browser/blockDetails',
+          name: 'blockDetails',
+          component: myBlockDetails
+        },
+        {
+          path: '/browser/assetDetails',
+          name: 'assetDetails',
+          component: myAssetDetails
+        },
+        {
+          path: '/browser/tradeDetails',
+          name: 'tradeDetails',
+          component: myTradeDetails
+        },
+        {
+          path: '/browser/balanceDetails',
+          name: 'balanceDetails',
+          component: myBalanceDetails
         },
       ]
     },

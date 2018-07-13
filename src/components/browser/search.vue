@@ -6,6 +6,10 @@
       <ul ref="select" :class="{search_type:!togglebg,showv:togglebg,}" @mouseleave="leaveHide">
         <li @click="changType($event)">区块高度</li>
         <li @click="changType($event)">区块哈希</li>
+        <li @click="changType($event)">资产哈希</li>
+        <li @click="changType($event)">资产ID</li>
+        <li @click="changType($event)">交易哈希</li>
+        <li @click="changType($event)">账户余额</li>
       </ul>
     </div>
     <input class="search_ipt" type="text" placeholder="请输入您要查找的内容" v-model.trim="search_content">
@@ -15,12 +19,21 @@
 
 <script>
   import formatDate from "@/common/js/formatDate.js";
-  import {baseURL,baseContract,baseABI} from '@/common/js/public.js';
+  import axios from "axios";
+  import _ from "lodash";
+  import {baseURL, baseContract, baseABI} from '@/common/js/public.js';
+  
   const reqURL = `${baseURL}`;
+  const tradeURL = `${baseURL}/v1/txn`;
+  const contractAddress = `${baseContract}`;
   //实例化web3对象
   var Web3 = require("web3");
   var web3 = new Web3();
   web3.setProvider(new web3.providers.HttpProvider(reqURL));
+  //定义abi及调用合约
+  var abi = baseABI;
+  var MyContract = web3.eth.contract(abi);
+  var myContractInstance = MyContract.at(contractAddress);
   export default {
     name: "home",
     components: {},
@@ -32,7 +45,16 @@
         searchTime: "",
         searchBlock: {},
         searchBlockjp: {},
-        blockData:{}
+        blockData: {},
+        searchAsset: {},
+        searchAssetjp: {},
+        assetData: {},
+        searchTrade: {},
+        searchTradejp: {},
+        tradeData: {},
+        searchAccountBalance: {},
+        searchAccountBalancejp: {},
+        accountBalanceData: {},
       };
     },
     methods: {
@@ -48,7 +70,7 @@
       changType(event) {
         this.searchType = event.target.innerText;
         this.togglebg = false;
-        this.search_content=""
+        this.search_content = ""
       },
       //获取查询时间
       getSearchTime() {
@@ -89,12 +111,12 @@
         );
       },
       clearSearch() {
-        this.search_content=""
+        this.search_content = ""
       },
       search() {
         if (this.search_content === "") {
           return
-        } else if (this.searchType === "区块高度") {//按区块高度或者区块哈希查询区块信息
+        } else if (this.searchType === "区块高度" || this.searchType === "区块哈希") {//按区块高度或者区块哈希查询区块信息
           this.searchTime = this.getSearchTime();
           this.searchBlock = web3.eth.getBlock(this.search_content);
           if (this.searchBlock === null) {
@@ -107,33 +129,86 @@
             );
             this.searchBlockjp = this.syntaxHighlight(this.searchBlock);
           }
-        } else if (this.searchType === "区块哈希") {
+          this.blockData.searchTime = this.searchTime;
+          this.blockData.searchBlock = this.searchBlock;
+          this.blockData.searchBlockjp = this.searchBlockjp;
+          this.getBlockData();
+          this.getSearchType();
+          this.getSearchInput();
+          this.clearSearch();
+          window.location.href = "#/browser/blockDetails"
+        } else if (this.searchType === "资产哈希" || this.searchType === "资产ID") {
           this.searchTime = this.getSearchTime();
-          this.searchBlock = web3.eth.getBlock(this.search_content);
-          if (this.searchBlock === null) {
-            this.searchBlock = "";
-            this.searchBlockjp = "您输入的区块哈希有误!!!";
+          this.searchAsset = myContractInstance.acquireVerify(this.search_content);
+          if (this.searchAsset[0] === "0x0000000000000000000000000000000000000000") {
+            this.searchAsset[0] = "";
+            this.searchAssetjp = "您输入的资产信息有误!!!";
           } else {
-            this.searchBlock.timestamp = formatDate(
-              new Date(this.searchBlock.timestamp * 1000),
-              "yyyy-MM-dd hh:mm:ss"
-            );
-            this.searchBlockjp = this.syntaxHighlight(this.searchBlock);
+            this.searchAssetjp = this.syntaxHighlight(this.searchAsset);
           }
+          this.assetData.searchTime = this.searchTime;
+          this.assetData.searchAsset = this.searchAsset;
+          this.assetData.searchAssetjp = this.searchAssetjp;
+          this.getAssetData();
+          this.getSearchType();
+          this.getSearchInput();
+          this.clearSearch();
+          window.location.href = "#/browser/assetDetails"
+        } else if (this.searchType === "交易哈希") {
+          this.searchTime = this.getSearchTime();
+          try {
+            this.searchTrade = web3.eth.getTransaction(this.search_content);
+            this.searchTradejp = this.syntaxHighlight(this.searchTrade);
+          } catch (e) {
+            this.searchTrade = "";
+            this.searchTradejp = "您输入的交易哈希有误!!!";
+          }
+          this.tradeData.searchTime = this.searchTime;
+          this.tradeData.searchTrade = this.searchTrade;
+          this.tradeData.searchTradejp = this.searchTradejp;
+          this.getTradeData();
+          this.getSearchType();
+          this.getSearchInput();
+          this.clearSearch();
+          window.location.href = "#/browser/tradeDetails"
+        } else if (this.searchType === "账户余额") {
+          this.searchTime = this.getSearchTime();
+          try {
+            this.searchAccountBalance.result = web3.eth.getBalance(this.search_content);
+            this.searchAccountBalance.id = this.search_content;
+            this.searchAccountBalance.result = this.searchAccountBalance.result.dividedBy(1e+18).toString();
+          } catch (e) {
+            this.searchAccountBalance.id = "您输入的账户地址有误!!!";
+            this.searchAccountBalance.result = "";
+          }
+          this.accountBalanceData.searchTime = this.searchTime;
+          this.accountBalanceData.searchAccountBalance = this.searchAccountBalance;
+          this.accountBalanceData.searchAccountBalancejp = this.searchAccountBalancejp;
+          this.getAccountBalanceData();
+          this.getSearchType();
+          this.getSearchInput();
+          this.clearSearch();
+          window.location.href = "#/browser/balanceDetails"
         }
-        this.blockData.searchTime=this.searchTime;
-        this.blockData.searchBlock=this.searchBlock;
-        this.blockData.searchBlockjp=this.searchBlockjp;
-        this.getBlockData();
-        this.getSearchInput();
-        this.clearSearch();
-        window.location.href="#/blockDetails"
+        
       },
-      getBlockData(){
-        this.$store.commit("changeBlockData",this.blockData);
+      getBlockData() {
+        this.$store.commit("changeBlockData", this.blockData);
       },
-      getSearchInput(){
-        this.$store.commit("changeSearchInput",this.search_content);
+      getAssetData() {
+        this.$store.commit("changeAssetData", this.assetData);
+      },
+      getTradeData() {
+        this.$store.commit("changeTradeData", this.tradeData);
+      },
+      getAccountBalanceData() {
+        this.$store.commit("changeAccountBalanceData", this.accountBalanceData);
+      },
+      getSearchInput() {
+        this.$store.commit("changeSearchInput", this.search_content);
+      },
+      getSearchType() {
+        this.$store.commit("changeSearchType", this.searchType);
       },
     },
   };
@@ -176,6 +251,10 @@
         background-image: url('./images/up.png');
         background-position: top 17px right 15px;
         background-repeat: no-repeat;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none
       }
       .showdown {
         margin: 0;
@@ -190,6 +269,10 @@
         background-image: url('./images/down.png');
         background-position: top 17px right 15px;
         background-repeat: no-repeat;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none
       }
       .search_type {
         position: absolute;
