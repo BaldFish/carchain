@@ -67,7 +67,7 @@ export default new Router({
       name: "book",
       component: myBook
     },
-    {
+    /*{
       path: "/browser",
       //name: "browser",
       component: myBrowser,
@@ -102,7 +102,7 @@ export default new Router({
           component: myBalanceDetails
         },
       ]
-    },
+    },*/
     {
       path: "/technology",
       name: "technology",
