@@ -29,9 +29,9 @@
           <li class="nav">
             <router-link to="/book">白皮书</router-link>
           </li>
-          <li class="nav">
+          <!--<li class="nav">
             <router-link to="/browser">区块链浏览器</router-link>
-          </li>
+          </li>-->
         </ul>
         <ul class="toggle">
           <li><a href="http://global.cdblockchain.io/">English</a></li>
@@ -48,7 +48,7 @@
             <li><a href="#/project">项目介绍</a></li>
             <li><a href="#/technology">技术优势</a></li>
             <li><a href="#/developer">车链计划</a></li>
-            <li><a href="#/browser">区块链浏览器</a></li>
+            <!--<li><a href="#/browser">区块链浏览器</a></li>-->
           </ul>
         </div>
         <div class="fl-box">
