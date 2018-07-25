@@ -19,7 +19,6 @@
           </div>
         </li>
       </ul>
-      <!--<my-paging :page-index="currentPage" :total="count" :page-size="pageSize" @change="pageChange"></my-paging>-->
       <div class="block" style="text-align:center">
         <el-pagination
           @size-change="handleSizeChange"
@@ -45,10 +44,6 @@
     components: {myPaging},//显示的声明组件
     data() {
       return {
-        /* pageSize: 2, //每页显示多少条数据
-         currentPage: 1, //默认当前页码
-         count: 10, //默认总记录数
-         info_data: [],*/
         page: 0,
         limit: 5,//每页显示多少条数据
         currentPage: 1,//默认当前页码
@@ -59,6 +54,25 @@
         tabsParam:["全部"],
         nowIndex:0,
       }
+    },
+    mounted() {
+      //请求第一页数据
+      this.getArticleList()
+      //获取文章类型
+      axios({
+        method: "GET",
+        url:
+          `${baseURL}/v1/essay-catg/all`
+      })
+        .then(res => {
+          this.article_type = res.data;
+          this.article_type.forEach((item)=>{
+            this.tabsParam.push(item.category_name)
+          })
+        })
+        .catch(error => {
+          this.article_type = [];
+        });
     },
     methods: {
       toggleTabs(index){
@@ -77,11 +91,9 @@
       },
       handleSizeChange(val) {
         this.limit = val;
-        //console.log(val)
         this.getArticleList()
       },
       handleCurrentChange(val) {
-        //console.log(val);
         this.page = val-1;
         this.getArticleList()
       },
@@ -99,46 +111,6 @@
             this.articleList = [];
           });
       },
-      /*//分页获取文章列表数据
-      getList() {
-        //子组件监听到count变化会自动更新DOM
-        axios
-          .get(`${baseURL}/v1/essay?page=${this.currentPage - 1}&limit=${this.pageSize}`)
-          .then(res => {
-            if (res.status === 200) {
-              this.info_data = res.data.info;
-              this.count = res.data.count
-            } else {
-              this.info_data = "";
-              this.count = 10;
-            }
-          })
-      },
-      //从page组件传递过来的当前page
-      pageChange(page) {
-        this.currentPage = page;
-        this.getList();
-      }*/
-    },
-    mounted() {
-      //请求第一页数据
-      // this.getList();
-      this.getArticleList()
-      //获取文章类型
-      axios({
-        method: "GET",
-        url:
-          `${baseURL}/v1/essay-catg/all`
-      })
-        .then(res => {
-          this.article_type = res.data;
-          this.article_type.forEach((item)=>{
-            this.tabsParam.push(item.category_name)
-          })
-        })
-        .catch(error => {
-          this.article_type = [];
-        });
     },
   }
 </script>
