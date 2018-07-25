@@ -15,12 +15,12 @@
     name: "info",
     data() {
       return {
-        articleData: this.$store.state.clickArticleData
+        articleData: this.$store.state.articleData
       }
     },
     mounted() {
-      this.articleData = this.$store.state.clickArticleData
-      this.articleData = JSON.parse(sessionStorage.getItem("clickData"))
+      this.articleData = this.$store.state.articleData
+      this.articleData = JSON.parse(sessionStorage.getItem("articleData"))
     }
   }
 </script>

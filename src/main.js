@@ -15,13 +15,19 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 const store = new Vuex.Store({
   state: {
-    clickArticleData: "",
+    articleData:{},
+    blockData: {},
+    assetData:{},
+    tradeData:{},
+    accountBalanceData:{},
+    searchInput:"",
+    searchType:"",
   },
   mutations: {
-    changeArticleData(state, params) {
-      state.clickArticleData = params;
-      window.sessionStorage.setItem("clickData", JSON.stringify(state.clickArticleData))
-    }
+    changeArticleData(state, params){
+      state.articleData = params;
+      window.sessionStorage.setItem("articleData", JSON.stringify(state.articleData))
+    },
   }
 });
 new Vue({
@@ -30,4 +36,4 @@ new Vue({
   store,
   components: {App},
   template: '<App/>'
-})
+});

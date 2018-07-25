@@ -8,13 +8,10 @@ import myProduct from '@/components/product/product'
 import myJoin from '@/components/join/join'
 import myDeveloper from '@/components/developer/developer'
 import myBook from '@/components/book/book'
-import myBrowser from '@/components/browser/browser'
 import myTechnology from '@/components/technology/technology'
 import myBigdata from '@/components/bigdata/bigdata'
-import myInfo1 from '@/components/information/info1'
-import myInfo2 from '@/components/information/info2'
 import myInfo from '@/components/information/info'
-Vue.use(Router)
+Vue.use(Router);
 
 export default new Router({
   routes: [
@@ -63,11 +60,6 @@ export default new Router({
       component: myBook
     },
     {
-      path: "/browser",
-      name: "browser",
-      component: myBrowser
-    },
-    {
       path: "/technology",
       name: "technology",
       component: myTechnology
@@ -76,16 +68,6 @@ export default new Router({
       path: "/bigdata",
       name: "bigdata",
       component: myBigdata
-    },
-    {
-      path: "/info1",
-      name: "info1",
-      component: myInfo1
-    },
-    {
-      path: "/info2",
-      name: "info2",
-      component: myInfo2
     },
     {
       path: "/info",
