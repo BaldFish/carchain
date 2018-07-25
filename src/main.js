@@ -15,6 +15,7 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 const store = new Vuex.Store({
   state: {
+    articleData:{},
     blockData: {},
     assetData:{},
     tradeData:{},
@@ -23,28 +24,10 @@ const store = new Vuex.Store({
     searchType:"",
   },
   mutations: {
-    changeBlockData(state, params) {
-      state.blockData = params;
-      window.sessionStorage.setItem("blockData", JSON.stringify(state.blockData))
+    changeArticleData(state, params){
+      state.articleData = params;
+      window.sessionStorage.setItem("articleData", JSON.stringify(state.articleData))
     },
-    changeAssetData(state, params) {
-      state.assetData = params;
-      window.sessionStorage.setItem("assetData", JSON.stringify(state.assetData))
-    },
-    changeTradeData(state, params) {
-      state.tradeData = params;
-      window.sessionStorage.setItem("tradeData", JSON.stringify(state.tradeData))
-    },
-    changeAccountBalanceData(state, params) {
-      state.accountBalanceData = params;
-      window.sessionStorage.setItem("accountBalanceData", JSON.stringify(state.accountBalanceData))
-    },
-    changeSearchInput(state, params) {
-      state.searchInput = params;
-    },
-    changeSearchType(state, params) {
-      state.searchType = params;
-    }
   }
 });
 new Vue({
