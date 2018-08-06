@@ -1,8 +1,17 @@
 <template>
   <div class="home">
-    <div class="box1">
-      <p>打造基于区块链技术的汽车数据生态</p>
+
+    <div class="carousel">
+      <el-carousel :interval="3000" arrow="always">
+        <el-carousel-item v-for="item in bannerList" :key="item.link_url">
+          <a :href="item.link_url"><img :src="item.picture_url" alt=""></a>
+        </el-carousel-item>
+      </el-carousel>
     </div>
+
+ <!--   <div class="box1">
+      <p>打造基于区块链技术的汽车数据生态</p>
+    </div>-->
     <div class="box2">
       <div class="headline">
         <p></p>
@@ -118,6 +127,11 @@
     data() {
       return {
         info_data: "",
+        //用webpack搭建的项目不能直接使用绝对路径，要用require，如果不使用这个，必须是线上图片。http类型的
+        bannerList:[
+          {link_url:'javascript:void(0)',picture_url:require('./images/cardatablockchain.png')},
+          {link_url:'javascript:void(0)',picture_url:require('./images/cardatablockchain.png')},
+        ]
       }
     },
     mounted() {
@@ -129,7 +143,19 @@
           } else {
             this.info_data = ""
           }
-        })
+        }),
+      //获取banner图
+      axios({
+        method: 'get',
+        url: `${baseURL}/v1/broadcast/s?type_id=5b572f9ea4cc0d6ea8ba5483`
+      }).then(res => {
+        this.bannerList = res.data
+
+      console.log(res.data)
+      }).catch(error => {
+          console.log(error)
+      })
+
     },
   }
 </script>
@@ -227,7 +253,7 @@
             margin-right 0
           }
         }
-        
+
       }
     }
     .box4 {
@@ -415,5 +441,51 @@
         }
       }
     }
+  }
+</style>
+<style lang="stylus">
+  .carousel{
+  max-width 1920px
+  //min-width 1212px
+  height 800px
+  margin 0 auto
+  .el-carousel{
+  width 100%
+  height 100%
+  .el-carousel__container{
+  width 100%
+  height 100%
+  .el-carousel__arrow{
+    width:50px;
+    height: 50px;
+    font-size: 30px;
+  }
+  .el-carousel__item{
+  width 100%
+  height 100%
+  text-align center
+  a{
+    img{
+      width:1920px;
+      height 800px
+      /*Firefox*/
+      margin:0 -moz-calc(50% - 1212px);
+      /*chrome safari*/
+      margin:0 -webkit-calc(50% - 1212px);
+      /*Standard */
+      margin:0 calc(50% - 1212px);
+    }
+  }
+  }
+  }
+  .el-carousel__indicators{
+  .el-carousel__indicator{
+    padding: 20px 6px;
+  .el-carousel__button{
+    width:36px;
+  }
+  }
+  }
+  }
   }
 </style>
