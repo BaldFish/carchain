@@ -16,7 +16,7 @@
     </div>
     <div class="divTab" v-show="nowIndex===2">
       <img src="./images/contact.png" alt="" style="margin-bottom: 38px">
-      <p style="">联系电话：010 - 63827419</p>
+      <p style="">联系电话：010 - 58205388</p>
     </div>
   </div>
 </template>
