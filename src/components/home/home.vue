@@ -129,10 +129,7 @@
       return {
         info_data: "",
         //用webpack搭建的项目不能直接使用绝对路径，要用require，如果不使用这个，必须是线上图片。http类型的
-        bannerList: [
-          {link_url: 'javascript:void(0)', picture_url: require('./images/cardatablockchain.png')},
-          {link_url: 'javascript:void(0)', picture_url: require('./images/cardatablockchain.png')},
-        ]
+        bannerList: []
       }
     },
     mounted() {
@@ -151,8 +148,6 @@
           url: `${baseURL}/v1/broadcast/s?type_id=5b572f9ea4cc0d6ea8ba5483`
         }).then(res => {
           this.bannerList = res.data
-          
-          console.log(res.data)
         }).catch(error => {
           console.log(error)
         })
